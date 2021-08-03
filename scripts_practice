@@ -1,0 +1,1836 @@
+login as: oracle
+oracle@192.168.116.253's password:
+Last login: Sun Jul 21 20:31:28 2019 from 192.168.116.1
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$ . oraenv
+ORACLE_SID = [orcl] ? orcl
+The Oracle base remains unchanged with value /u01/app/oracle
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$ rman target /
+
+Recovery Manager: Release 19.0.0.0.0 - Production on Sun Jul 28 20:19:03 2019
+Version 19.2.0.0.0
+
+Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
+
+connected to target database: ORCL (DBID=1531858278)
+
+RMAN>
+
+RMAN>
+
+
+RMAN> list backup of database;
+
+using target database control file instead of recovery catalog
+
+List of Backup Sets
+===================
+
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+2       Full    282.20M    DISK        00:00:26     24-APR-19
+        BP Key: 2   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081329
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_nnndf_TAG20190424T081329_gczklb0m_.bkp
+  List of Datafiles in backup set 2
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  7       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+6       Full    283.34M    DISK        00:00:26     24-APR-19
+        BP Key: 6   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081853
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_nnndf_TAG20190424T081853_gczkwff8_.bkp
+  List of Datafiles in backup set 6
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+9       Full    1.24M      DISK        00:00:00     24-APR-19
+        BP Key: 9   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T082415
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_nnndf_TAG20190424T082415_gczl6htb_.bkp
+  List of Datafiles in backup set 9
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  5       Full 2858014    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+13      Full    1.33G      DISK        00:00:08     21-JUL-19
+        BP Key: 13   Status: AVAILABLE  Compressed: NO  Tag: TAG20190721T220648
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_07_21/o1_mf_nnndf_TAG20190721T220648_gm93drch_.bkp
+  List of Datafiles in backup set 13
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+RMAN>
+
+RMAN>
+
+RMAN>
+
+RMAN> report schema;
+
+Report of database schema for database with db_unique_name ORCL
+
+List of Permanent Datafiles
+===========================
+File Size(MB) Tablespace           RB segs Datafile Name
+---- -------- -------------------- ------- ------------------------
+1    910      SYSTEM               YES     /u01/app/oracle/oradata/ORCL/system01.dbf
+3    750      SYSAUX               NO      /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+4    65       UNDOTBS1             YES     /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+5    10       T                    NO      /u01/app/oracle/oradata/ORCL/t01.dbf
+7    5        USERS                NO      /u01/app/oracle/oradata/ORCL/users01.dbf
+
+List of Temporary Files
+=======================
+File Size(MB) Tablespace           Maxsize(MB) Tempfile Name
+---- -------- -------------------- ----------- --------------------
+1    2471     TEMP                 2471        /u01/app/oracle/oradata/ORCL/temp01.dbf
+
+RMAN>
+
+RMAN> list backup summary;
+
+
+List of Backups
+===============
+Key     TY LV S Device Type Completion Time #Pieces #Copies Compressed Tag
+------- -- -- - ----------- --------------- ------- ------- ---------- ---
+1       B  A  A DISK        24-APR-19       1       1       YES        TAG20190424T081328
+2       B  F  A DISK        24-APR-19       1       1       YES        TAG20190424T081329
+3       B  A  A DISK        24-APR-19       1       1       YES        TAG20190424T081405
+4       B  F  A DISK        24-APR-19       1       1       NO         TAG20190424T081407
+5       B  A  A DISK        24-APR-19       1       1       YES        TAG20190424T081851
+6       B  F  A DISK        24-APR-19       1       1       YES        TAG20190424T081853
+7       B  A  A DISK        24-APR-19       1       1       YES        TAG20190424T081928
+8       B  F  A DISK        24-APR-19       1       1       NO         TAG20190424T081929
+9       B  F  A DISK        24-APR-19       1       1       NO         TAG20190424T082415
+10      B  F  A DISK        24-APR-19       1       1       NO         TAG20190424T082416
+11      B  F  A DISK        15-JUL-19       1       1       NO         TAG20190715T095114
+12      B  F  A DISK        21-JUL-19       1       1       NO         TAG20190721T205103
+13      B  F  A DISK        21-JUL-19       1       1       NO         TAG20190721T220648
+14      B  F  A DISK        21-JUL-19       1       1       NO         TAG20190721T220703
+
+RMAN>
+
+RMAN>
+
+RMAN> show all;
+
+RMAN configuration parameters for database with db_unique_name ORCL are:
+CONFIGURE RETENTION POLICY TO REDUNDANCY 2;
+CONFIGURE BACKUP OPTIMIZATION OFF; # default
+CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+CONFIGURE CONTROLFILE AUTOBACKUP ON; # default
+CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '%F'; # default
+CONFIGURE DEVICE TYPE DISK PARALLELISM 1 BACKUP TYPE TO BACKUPSET; # default
+CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+CONFIGURE MAXSETSIZE TO UNLIMITED; # default
+CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+CONFIGURE COMPRESSION ALGORITHM 'BASIC' AS OF RELEASE 'DEFAULT' OPTIMIZE FOR LOAD TRUE ; # default
+CONFIGURE RMAN OUTPUT TO KEEP FOR 7 DAYS; # default
+CONFIGURE ARCHIVELOG DELETION POLICY TO NONE; # default
+CONFIGURE SNAPSHOT CONTROLFILE NAME TO '/u01/app/oracle/product/19.0.0/dbhome_1/dbs/snapcf_orcl.f'; # default
+
+RMAN>
+
+RMAN>
+
+RMAN> BACKUP INCREMENTAL LEVEL 0 DATABASE;
+
+Starting backup at 28-JUL-19
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=397 device type=DISK
+channel ORA_DISK_1: starting incremental level 0 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00001 name=/u01/app/oracle/oradata/ORCL/system01.dbf
+input datafile file number=00003 name=/u01/app/oracle/oradata/ORCL/sysaux01.dbf
+input datafile file number=00004 name=/u01/app/oracle/oradata/ORCL/undotbs01.dbf
+input datafile file number=00005 name=/u01/app/oracle/oradata/ORCL/t01.dbf
+input datafile file number=00007 name=/u01/app/oracle/oradata/ORCL/users01.dbf
+channel ORA_DISK_1: starting piece 1 at 28-JUL-19
+channel ORA_DISK_1: finished piece 1 at 28-JUL-19
+piece handle=/u01/app/oracle/recovery_area/ORCL/backupset/2019_07_28/o1_mf_nnnd0_TAG20190728T202201_gmvcwb41_.bkp tag=TAG20190728T202201 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:00:15
+Finished backup at 28-JUL-19
+
+Starting Control File and SPFILE Autobackup at 28-JUL-19
+piece handle=/u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_28/o1_mf_s_1014841337_gmvcwsc1_.bkp comment=NONE
+Finished Control File and SPFILE Autobackup at 28-JUL-19
+
+RMAN> list backup summary;
+
+
+List of Backups
+===============
+Key     TY LV S Device Type Completion Time #Pieces #Copies Compressed Tag
+------- -- -- - ----------- --------------- ------- ------- ---------- ---
+1       B  A  A DISK        24-APR-19       1       1       YES        TAG20190424T081328
+2       B  F  A DISK        24-APR-19       1       1       YES        TAG20190424T081329
+3       B  A  A DISK        24-APR-19       1       1       YES        TAG20190424T081405
+4       B  F  A DISK        24-APR-19       1       1       NO         TAG20190424T081407
+5       B  A  A DISK        24-APR-19       1       1       YES        TAG20190424T081851
+6       B  F  A DISK        24-APR-19       1       1       YES        TAG20190424T081853
+7       B  A  A DISK        24-APR-19       1       1       YES        TAG20190424T081928
+8       B  F  A DISK        24-APR-19       1       1       NO         TAG20190424T081929
+9       B  F  A DISK        24-APR-19       1       1       NO         TAG20190424T082415
+10      B  F  A DISK        24-APR-19       1       1       NO         TAG20190424T082416
+11      B  F  A DISK        15-JUL-19       1       1       NO         TAG20190715T095114
+12      B  F  A DISK        21-JUL-19       1       1       NO         TAG20190721T205103
+13      B  F  A DISK        21-JUL-19       1       1       NO         TAG20190721T220648
+14      B  F  A DISK        21-JUL-19       1       1       NO         TAG20190721T220703
+15      B  0  A DISK        28-JUL-19       1       1       NO         TAG20190728T202201
+16      B  F  A DISK        28-JUL-19       1       1       NO         TAG20190728T202217
+
+RMAN> list backup;
+
+
+List of Backup Sets
+===================
+
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+1       2.32M      DISK        00:00:00     24-APR-19
+        BP Key: 1   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081328
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_annnn_TAG20190424T081328_gczkl8ld_.bkp
+
+  List of Archived Logs in backup set 1
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    9       2849443    24-APR-19 2856465    24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+2       Full    282.20M    DISK        00:00:26     24-APR-19
+        BP Key: 2   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081329
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_nnndf_TAG20190424T081329_gczklb0m_.bkp
+  List of Datafiles in backup set 2
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  7       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+3       7.00K      DISK        00:00:00     24-APR-19
+        BP Key: 3   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081405
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_annnn_TAG20190424T081405_gczkmfn5_.bkp
+
+  List of Archived Logs in backup set 3
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    10      2856465    24-APR-19 2856504    24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+4       Full    10.20M     DISK        00:00:00     24-APR-19
+        BP Key: 4   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T081407
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_04_24/o1_mf_s_1006416847_gczkmh4t_.bkp
+  SPFILE Included: Modification time: 24-APR-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 2856517      Ckp time: 24-APR-19
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+5       2.33M      DISK        00:00:00     24-APR-19
+        BP Key: 5   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081851
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_annnn_TAG20190424T081851_gczkwd2t_.bkp
+
+  List of Archived Logs in backup set 5
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    9       2849443    24-APR-19 2856465    24-APR-19
+  1    10      2856465    24-APR-19 2856504    24-APR-19
+  1    11      2856504    24-APR-19 2856699    24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+6       Full    283.34M    DISK        00:00:26     24-APR-19
+        BP Key: 6   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081853
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_nnndf_TAG20190424T081853_gczkwff8_.bkp
+  List of Datafiles in backup set 6
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+7       7.00K      DISK        00:00:00     24-APR-19
+        BP Key: 7   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081928
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_annnn_TAG20190424T081928_gczkxjp8_.bkp
+
+  List of Archived Logs in backup set 7
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    12      2856699    24-APR-19 2856735    24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+8       Full    10.20M     DISK        00:00:01     24-APR-19
+        BP Key: 8   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T081929
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_04_24/o1_mf_s_1006417169_gczkxl17_.bkp
+  SPFILE Included: Modification time: 24-APR-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 2856748      Ckp time: 24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+9       Full    1.24M      DISK        00:00:00     24-APR-19
+        BP Key: 9   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T082415
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_nnndf_TAG20190424T082415_gczl6htb_.bkp
+  List of Datafiles in backup set 9
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  5       Full 2858014    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+10      Full    10.20M     DISK        00:00:01     24-APR-19
+        BP Key: 10   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T082416
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_04_24/o1_mf_s_1006417456_gczl6k0q_.bkp
+  SPFILE Included: Modification time: 24-APR-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 2858022      Ckp time: 24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+11      Full    10.20M     DISK        00:00:00     15-JUL-19
+        BP Key: 11   Status: AVAILABLE  Compressed: NO  Tag: TAG20190715T095114
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_15/o1_mf_s_1013680274_glqy1lkw_.bkp
+  SPFILE Included: Modification time: 15-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 3904525      Ckp time: 15-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+12      Full    10.20M     DISK        00:00:00     21-JUL-19
+        BP Key: 12   Status: AVAILABLE  Compressed: NO  Tag: TAG20190721T205103
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_21/o1_mf_s_1014238263_gm8yyqnf_.bkp
+  SPFILE Included: Modification time: 21-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4136005      Ckp time: 21-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+13      Full    1.33G      DISK        00:00:08     21-JUL-19
+        BP Key: 13   Status: AVAILABLE  Compressed: NO  Tag: TAG20190721T220648
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_07_21/o1_mf_nnndf_TAG20190721T220648_gm93drch_.bkp
+  List of Datafiles in backup set 13
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+14      Full    10.20M     DISK        00:00:00     21-JUL-19
+        BP Key: 14   Status: AVAILABLE  Compressed: NO  Tag: TAG20190721T220703
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_21/o1_mf_s_1014242823_gm93f7s9_.bkp
+  SPFILE Included: Modification time: 21-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4143022      Ckp time: 21-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+15      Incr 0  1.35G      DISK        00:00:08     28-JUL-19
+        BP Key: 15   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202201
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_07_28/o1_mf_nnnd0_TAG20190728T202201_gmvcwb41_.bkp
+  List of Datafiles in backup set 15
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+16      Full    10.23M     DISK        00:00:00     28-JUL-19
+        BP Key: 16   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202217
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_28/o1_mf_s_1014841337_gmvcwsc1_.bkp
+  SPFILE Included: Modification time: 28-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4369582      Ckp time: 28-JUL-19
+
+RMAN>
+
+RMAN>
+
+RMAN>
+
+RMAN> BACKUP INCREMENTAL LEVEL 1 CUMULATIVE DATABASE;
+
+Starting backup at 28-JUL-19
+using channel ORA_DISK_1
+channel ORA_DISK_1: starting incremental level 1 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00001 name=/u01/app/oracle/oradata/ORCL/system01.dbf
+input datafile file number=00003 name=/u01/app/oracle/oradata/ORCL/sysaux01.dbf
+input datafile file number=00004 name=/u01/app/oracle/oradata/ORCL/undotbs01.dbf
+input datafile file number=00005 name=/u01/app/oracle/oradata/ORCL/t01.dbf
+input datafile file number=00007 name=/u01/app/oracle/oradata/ORCL/users01.dbf
+channel ORA_DISK_1: starting piece 1 at 28-JUL-19
+channel ORA_DISK_1: finished piece 1 at 28-JUL-19
+piece handle=/u01/app/oracle/recovery_area/ORCL/backupset/2019_07_28/o1_mf_nnnd1_TAG20190728T202334_gmvcz6xb_.bkp tag=TAG20190728T202334 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:00:07
+Finished backup at 28-JUL-19
+
+Starting Control File and SPFILE Autobackup at 28-JUL-19
+piece handle=/u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_28/o1_mf_s_1014841422_gmvczg4q_.bkp comment=NONE
+Finished Control File and SPFILE Autobackup at 28-JUL-19
+
+RMAN>  list backup;
+
+
+List of Backup Sets
+===================
+
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+1       2.32M      DISK        00:00:00     24-APR-19
+        BP Key: 1   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081328
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_annnn_TAG20190424T081328_gczkl8ld_.bkp
+
+  List of Archived Logs in backup set 1
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    9       2849443    24-APR-19 2856465    24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+2       Full    282.20M    DISK        00:00:26     24-APR-19
+        BP Key: 2   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081329
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_nnndf_TAG20190424T081329_gczklb0m_.bkp
+  List of Datafiles in backup set 2
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  7       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+3       7.00K      DISK        00:00:00     24-APR-19
+        BP Key: 3   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081405
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_annnn_TAG20190424T081405_gczkmfn5_.bkp
+
+  List of Archived Logs in backup set 3
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    10      2856465    24-APR-19 2856504    24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+4       Full    10.20M     DISK        00:00:00     24-APR-19
+        BP Key: 4   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T081407
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_04_24/o1_mf_s_1006416847_gczkmh4t_.bkp
+  SPFILE Included: Modification time: 24-APR-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 2856517      Ckp time: 24-APR-19
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+5       2.33M      DISK        00:00:00     24-APR-19
+        BP Key: 5   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081851
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_annnn_TAG20190424T081851_gczkwd2t_.bkp
+
+  List of Archived Logs in backup set 5
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    9       2849443    24-APR-19 2856465    24-APR-19
+  1    10      2856465    24-APR-19 2856504    24-APR-19
+  1    11      2856504    24-APR-19 2856699    24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+6       Full    283.34M    DISK        00:00:26     24-APR-19
+        BP Key: 6   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081853
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_nnndf_TAG20190424T081853_gczkwff8_.bkp
+  List of Datafiles in backup set 6
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+7       7.00K      DISK        00:00:00     24-APR-19
+        BP Key: 7   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081928
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_annnn_TAG20190424T081928_gczkxjp8_.bkp
+
+  List of Archived Logs in backup set 7
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    12      2856699    24-APR-19 2856735    24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+8       Full    10.20M     DISK        00:00:01     24-APR-19
+        BP Key: 8   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T081929
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_04_24/o1_mf_s_1006417169_gczkxl17_.bkp
+  SPFILE Included: Modification time: 24-APR-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 2856748      Ckp time: 24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+9       Full    1.24M      DISK        00:00:00     24-APR-19
+        BP Key: 9   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T082415
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_nnndf_TAG20190424T082415_gczl6htb_.bkp
+  List of Datafiles in backup set 9
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  5       Full 2858014    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+10      Full    10.20M     DISK        00:00:01     24-APR-19
+        BP Key: 10   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T082416
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_04_24/o1_mf_s_1006417456_gczl6k0q_.bkp
+  SPFILE Included: Modification time: 24-APR-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 2858022      Ckp time: 24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+11      Full    10.20M     DISK        00:00:00     15-JUL-19
+        BP Key: 11   Status: AVAILABLE  Compressed: NO  Tag: TAG20190715T095114
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_15/o1_mf_s_1013680274_glqy1lkw_.bkp
+  SPFILE Included: Modification time: 15-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 3904525      Ckp time: 15-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+12      Full    10.20M     DISK        00:00:00     21-JUL-19
+        BP Key: 12   Status: AVAILABLE  Compressed: NO  Tag: TAG20190721T205103
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_21/o1_mf_s_1014238263_gm8yyqnf_.bkp
+  SPFILE Included: Modification time: 21-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4136005      Ckp time: 21-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+13      Full    1.33G      DISK        00:00:08     21-JUL-19
+        BP Key: 13   Status: AVAILABLE  Compressed: NO  Tag: TAG20190721T220648
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_07_21/o1_mf_nnndf_TAG20190721T220648_gm93drch_.bkp
+  List of Datafiles in backup set 13
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+14      Full    10.20M     DISK        00:00:00     21-JUL-19
+        BP Key: 14   Status: AVAILABLE  Compressed: NO  Tag: TAG20190721T220703
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_21/o1_mf_s_1014242823_gm93f7s9_.bkp
+  SPFILE Included: Modification time: 21-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4143022      Ckp time: 21-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+15      Incr 0  1.35G      DISK        00:00:08     28-JUL-19
+        BP Key: 15   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202201
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_07_28/o1_mf_nnnd0_TAG20190728T202201_gmvcwb41_.bkp
+  List of Datafiles in backup set 15
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+16      Full    10.23M     DISK        00:00:00     28-JUL-19
+        BP Key: 16   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202217
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_28/o1_mf_s_1014841337_gmvcwsc1_.bkp
+  SPFILE Included: Modification time: 28-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4369582      Ckp time: 28-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+17      Incr 1  192.00K    DISK        00:00:04     28-JUL-19
+        BP Key: 17   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202334
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_07_28/o1_mf_nnnd1_TAG20190728T202334_gmvcz6xb_.bkp
+  List of Datafiles in backup set 17
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1    1  Incr 4369666    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3    1  Incr 4369666    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4    1  Incr 4369666    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5    1  Incr 4369666    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7    1  Incr 4369666    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+18      Full    10.23M     DISK        00:00:00     28-JUL-19
+        BP Key: 18   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202342
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_28/o1_mf_s_1014841422_gmvczg4q_.bkp
+  SPFILE Included: Modification time: 28-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4369680      Ckp time: 28-JUL-19
+
+RMAN>
+
+RMAN>
+
+RMAN> BACKUP INCREMENTAL LEVEL 1 DATABASE;
+
+Starting backup at 28-JUL-19
+using channel ORA_DISK_1
+channel ORA_DISK_1: starting incremental level 1 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00001 name=/u01/app/oracle/oradata/ORCL/system01.dbf
+input datafile file number=00003 name=/u01/app/oracle/oradata/ORCL/sysaux01.dbf
+input datafile file number=00004 name=/u01/app/oracle/oradata/ORCL/undotbs01.dbf
+input datafile file number=00005 name=/u01/app/oracle/oradata/ORCL/t01.dbf
+input datafile file number=00007 name=/u01/app/oracle/oradata/ORCL/users01.dbf
+channel ORA_DISK_1: starting piece 1 at 28-JUL-19
+channel ORA_DISK_1: finished piece 1 at 28-JUL-19
+piece handle=/u01/app/oracle/recovery_area/ORCL/backupset/2019_07_28/o1_mf_nnnd1_TAG20190728T202648_gmvd5868_.bkp tag=TAG20190728T202648 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:00:07
+Finished backup at 28-JUL-19
+
+Starting Control File and SPFILE Autobackup at 28-JUL-19
+piece handle=/u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_28/o1_mf_s_1014841615_gmvd5hcy_.bkp comment=NONE
+Finished Control File and SPFILE Autobackup at 28-JUL-19
+
+RMAN>
+
+RMAN>
+
+RMAN>
+
+RMAN> list backup;
+
+
+List of Backup Sets
+===================
+
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+1       2.32M      DISK        00:00:00     24-APR-19
+        BP Key: 1   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081328
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_annnn_TAG20190424T081328_gczkl8ld_.bkp
+
+  List of Archived Logs in backup set 1
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    9       2849443    24-APR-19 2856465    24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+2       Full    282.20M    DISK        00:00:26     24-APR-19
+        BP Key: 2   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081329
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_nnndf_TAG20190424T081329_gczklb0m_.bkp
+  List of Datafiles in backup set 2
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  7       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+3       7.00K      DISK        00:00:00     24-APR-19
+        BP Key: 3   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081405
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_annnn_TAG20190424T081405_gczkmfn5_.bkp
+
+  List of Archived Logs in backup set 3
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    10      2856465    24-APR-19 2856504    24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+4       Full    10.20M     DISK        00:00:00     24-APR-19
+        BP Key: 4   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T081407
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_04_24/o1_mf_s_1006416847_gczkmh4t_.bkp
+  SPFILE Included: Modification time: 24-APR-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 2856517      Ckp time: 24-APR-19
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+5       2.33M      DISK        00:00:00     24-APR-19
+        BP Key: 5   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081851
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_annnn_TAG20190424T081851_gczkwd2t_.bkp
+
+  List of Archived Logs in backup set 5
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    9       2849443    24-APR-19 2856465    24-APR-19
+  1    10      2856465    24-APR-19 2856504    24-APR-19
+  1    11      2856504    24-APR-19 2856699    24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+6       Full    283.34M    DISK        00:00:26     24-APR-19
+        BP Key: 6   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081853
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_nnndf_TAG20190424T081853_gczkwff8_.bkp
+  List of Datafiles in backup set 6
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+7       7.00K      DISK        00:00:00     24-APR-19
+        BP Key: 7   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081928
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_annnn_TAG20190424T081928_gczkxjp8_.bkp
+
+  List of Archived Logs in backup set 7
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    12      2856699    24-APR-19 2856735    24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+8       Full    10.20M     DISK        00:00:01     24-APR-19
+        BP Key: 8   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T081929
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_04_24/o1_mf_s_1006417169_gczkxl17_.bkp
+  SPFILE Included: Modification time: 24-APR-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 2856748      Ckp time: 24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+9       Full    1.24M      DISK        00:00:00     24-APR-19
+        BP Key: 9   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T082415
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_nnndf_TAG20190424T082415_gczl6htb_.bkp
+  List of Datafiles in backup set 9
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  5       Full 2858014    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+10      Full    10.20M     DISK        00:00:01     24-APR-19
+        BP Key: 10   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T082416
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_04_24/o1_mf_s_1006417456_gczl6k0q_.bkp
+  SPFILE Included: Modification time: 24-APR-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 2858022      Ckp time: 24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+11      Full    10.20M     DISK        00:00:00     15-JUL-19
+        BP Key: 11   Status: AVAILABLE  Compressed: NO  Tag: TAG20190715T095114
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_15/o1_mf_s_1013680274_glqy1lkw_.bkp
+  SPFILE Included: Modification time: 15-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 3904525      Ckp time: 15-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+12      Full    10.20M     DISK        00:00:00     21-JUL-19
+        BP Key: 12   Status: AVAILABLE  Compressed: NO  Tag: TAG20190721T205103
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_21/o1_mf_s_1014238263_gm8yyqnf_.bkp
+  SPFILE Included: Modification time: 21-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4136005      Ckp time: 21-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+13      Full    1.33G      DISK        00:00:08     21-JUL-19
+        BP Key: 13   Status: AVAILABLE  Compressed: NO  Tag: TAG20190721T220648
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_07_21/o1_mf_nnndf_TAG20190721T220648_gm93drch_.bkp
+  List of Datafiles in backup set 13
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+14      Full    10.20M     DISK        00:00:00     21-JUL-19
+        BP Key: 14   Status: AVAILABLE  Compressed: NO  Tag: TAG20190721T220703
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_21/o1_mf_s_1014242823_gm93f7s9_.bkp
+  SPFILE Included: Modification time: 21-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4143022      Ckp time: 21-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+15      Incr 0  1.35G      DISK        00:00:08     28-JUL-19
+        BP Key: 15   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202201
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_07_28/o1_mf_nnnd0_TAG20190728T202201_gmvcwb41_.bkp
+  List of Datafiles in backup set 15
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+16      Full    10.23M     DISK        00:00:00     28-JUL-19
+        BP Key: 16   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202217
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_28/o1_mf_s_1014841337_gmvcwsc1_.bkp
+  SPFILE Included: Modification time: 28-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4369582      Ckp time: 28-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+17      Incr 1  192.00K    DISK        00:00:04     28-JUL-19
+        BP Key: 17   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202334
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_07_28/o1_mf_nnnd1_TAG20190728T202334_gmvcz6xb_.bkp
+  List of Datafiles in backup set 17
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1    1  Incr 4369666    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3    1  Incr 4369666    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4    1  Incr 4369666    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5    1  Incr 4369666    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7    1  Incr 4369666    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+18      Full    10.23M     DISK        00:00:00     28-JUL-19
+        BP Key: 18   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202342
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_28/o1_mf_s_1014841422_gmvczg4q_.bkp
+  SPFILE Included: Modification time: 28-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4369680      Ckp time: 28-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+19      Incr 1  592.00K    DISK        00:00:03     28-JUL-19
+        BP Key: 19   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202648
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_07_28/o1_mf_nnnd1_TAG20190728T202648_gmvd5868_.bkp
+  List of Datafiles in backup set 19
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1    1  Incr 4370091    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3    1  Incr 4370091    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4    1  Incr 4370091    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5    1  Incr 4370091    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7    1  Incr 4370091    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+20      Full    10.23M     DISK        00:00:00     28-JUL-19
+        BP Key: 20   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202655
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_28/o1_mf_s_1014841615_gmvd5hcy_.bkp
+  SPFILE Included: Modification time: 28-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4370102      Ckp time: 28-JUL-19
+
+RMAN>
+
+RMAN>
+
+RMAN>
+
+RMAN>
+
+RMAN> backup as copy datafile 5;
+
+Starting backup at 28-JUL-19
+using channel ORA_DISK_1
+channel ORA_DISK_1: starting datafile copy
+input datafile file number=00005 name=/u01/app/oracle/oradata/ORCL/t01.dbf
+output file name=/u01/app/oracle/recovery_area/ORCL/datafile/o1_mf_t_gmvd81sv_.dbf tag=TAG20190728T202817 RECID=1 STAMP=1014841697
+channel ORA_DISK_1: datafile copy complete, elapsed time: 00:00:01
+Finished backup at 28-JUL-19
+
+Starting Control File and SPFILE Autobackup at 28-JUL-19
+piece handle=/u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_28/o1_mf_s_1014841698_gmvd830m_.bkp comment=NONE
+Finished Control File and SPFILE Autobackup at 28-JUL-19
+
+RMAN>
+
+RMAN>
+
+RMAN> list backup;
+
+
+List of Backup Sets
+===================
+
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+1       2.32M      DISK        00:00:00     24-APR-19
+        BP Key: 1   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081328
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_annnn_TAG20190424T081328_gczkl8ld_.bkp
+
+  List of Archived Logs in backup set 1
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    9       2849443    24-APR-19 2856465    24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+2       Full    282.20M    DISK        00:00:26     24-APR-19
+        BP Key: 2   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081329
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_nnndf_TAG20190424T081329_gczklb0m_.bkp
+  List of Datafiles in backup set 2
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  7       Full 2856484    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+3       7.00K      DISK        00:00:00     24-APR-19
+        BP Key: 3   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081405
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_annnn_TAG20190424T081405_gczkmfn5_.bkp
+
+  List of Archived Logs in backup set 3
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    10      2856465    24-APR-19 2856504    24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+4       Full    10.20M     DISK        00:00:00     24-APR-19
+        BP Key: 4   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T081407
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_04_24/o1_mf_s_1006416847_gczkmh4t_.bkp
+  SPFILE Included: Modification time: 24-APR-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 2856517      Ckp time: 24-APR-19
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+5       2.33M      DISK        00:00:00     24-APR-19
+        BP Key: 5   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081851
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_annnn_TAG20190424T081851_gczkwd2t_.bkp
+
+  List of Archived Logs in backup set 5
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    9       2849443    24-APR-19 2856465    24-APR-19
+  1    10      2856465    24-APR-19 2856504    24-APR-19
+  1    11      2856504    24-APR-19 2856699    24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+6       Full    283.34M    DISK        00:00:26     24-APR-19
+        BP Key: 6   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081853
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_nnndf_TAG20190424T081853_gczkwff8_.bkp
+  List of Datafiles in backup set 6
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7       Full 2856718    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+7       7.00K      DISK        00:00:00     24-APR-19
+        BP Key: 7   Status: AVAILABLE  Compressed: YES  Tag: TAG20190424T081928
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_annnn_TAG20190424T081928_gczkxjp8_.bkp
+
+  List of Archived Logs in backup set 7
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    12      2856699    24-APR-19 2856735    24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+8       Full    10.20M     DISK        00:00:01     24-APR-19
+        BP Key: 8   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T081929
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_04_24/o1_mf_s_1006417169_gczkxl17_.bkp
+  SPFILE Included: Modification time: 24-APR-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 2856748      Ckp time: 24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+9       Full    1.24M      DISK        00:00:00     24-APR-19
+        BP Key: 9   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T082415
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_04_24/o1_mf_nnndf_TAG20190424T082415_gczl6htb_.bkp
+  List of Datafiles in backup set 9
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  5       Full 2858014    24-APR-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+10      Full    10.20M     DISK        00:00:01     24-APR-19
+        BP Key: 10   Status: AVAILABLE  Compressed: NO  Tag: TAG20190424T082416
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_04_24/o1_mf_s_1006417456_gczl6k0q_.bkp
+  SPFILE Included: Modification time: 24-APR-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 2858022      Ckp time: 24-APR-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+11      Full    10.20M     DISK        00:00:00     15-JUL-19
+        BP Key: 11   Status: AVAILABLE  Compressed: NO  Tag: TAG20190715T095114
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_15/o1_mf_s_1013680274_glqy1lkw_.bkp
+  SPFILE Included: Modification time: 15-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 3904525      Ckp time: 15-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+12      Full    10.20M     DISK        00:00:00     21-JUL-19
+        BP Key: 12   Status: AVAILABLE  Compressed: NO  Tag: TAG20190721T205103
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_21/o1_mf_s_1014238263_gm8yyqnf_.bkp
+  SPFILE Included: Modification time: 21-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4136005      Ckp time: 21-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+13      Full    1.33G      DISK        00:00:08     21-JUL-19
+        BP Key: 13   Status: AVAILABLE  Compressed: NO  Tag: TAG20190721T220648
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_07_21/o1_mf_nnndf_TAG20190721T220648_gm93drch_.bkp
+  List of Datafiles in backup set 13
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7       Full 4143009    21-JUL-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+14      Full    10.20M     DISK        00:00:00     21-JUL-19
+        BP Key: 14   Status: AVAILABLE  Compressed: NO  Tag: TAG20190721T220703
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_21/o1_mf_s_1014242823_gm93f7s9_.bkp
+  SPFILE Included: Modification time: 21-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4143022      Ckp time: 21-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+15      Incr 0  1.35G      DISK        00:00:08     28-JUL-19
+        BP Key: 15   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202201
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_07_28/o1_mf_nnnd0_TAG20190728T202201_gmvcwb41_.bkp
+  List of Datafiles in backup set 15
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7    0  Incr 4369569    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+16      Full    10.23M     DISK        00:00:00     28-JUL-19
+        BP Key: 16   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202217
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_28/o1_mf_s_1014841337_gmvcwsc1_.bkp
+  SPFILE Included: Modification time: 28-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4369582      Ckp time: 28-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+17      Incr 1  192.00K    DISK        00:00:04     28-JUL-19
+        BP Key: 17   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202334
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_07_28/o1_mf_nnnd1_TAG20190728T202334_gmvcz6xb_.bkp
+  List of Datafiles in backup set 17
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1    1  Incr 4369666    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3    1  Incr 4369666    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4    1  Incr 4369666    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5    1  Incr 4369666    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7    1  Incr 4369666    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+18      Full    10.23M     DISK        00:00:00     28-JUL-19
+        BP Key: 18   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202342
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_28/o1_mf_s_1014841422_gmvczg4q_.bkp
+  SPFILE Included: Modification time: 28-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4369680      Ckp time: 28-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+19      Incr 1  592.00K    DISK        00:00:03     28-JUL-19
+        BP Key: 19   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202648
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/backupset/2019_07_28/o1_mf_nnnd1_TAG20190728T202648_gmvd5868_.bkp
+  List of Datafiles in backup set 19
+  File LV Type Ckp SCN    Ckp Time  Abs Fuz SCN Sparse Name
+  ---- -- ---- ---------- --------- ----------- ------ ----
+  1    1  Incr 4370091    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/system01.dbf
+  3    1  Incr 4370091    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/sysaux01.dbf
+  4    1  Incr 4370091    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/undotbs01.dbf
+  5    1  Incr 4370091    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/t01.dbf
+  7    1  Incr 4370091    28-JUL-19              NO    /u01/app/oracle/oradata/ORCL/users01.dbf
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+20      Full    10.23M     DISK        00:00:00     28-JUL-19
+        BP Key: 20   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202655
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_28/o1_mf_s_1014841615_gmvd5hcy_.bkp
+  SPFILE Included: Modification time: 28-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4370102      Ckp time: 28-JUL-19
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+21      Full    10.23M     DISK        00:00:01     28-JUL-19
+        BP Key: 21   Status: AVAILABLE  Compressed: NO  Tag: TAG20190728T202818
+        Piece Name: /u01/app/oracle/recovery_area/ORCL/autobackup/2019_07_28/o1_mf_s_1014841698_gmvd830m_.bkp
+  SPFILE Included: Modification time: 28-JUL-19
+  SPFILE db_unique_name: ORCL
+  Control File Included: Ckp SCN: 4370184      Ckp time: 28-JUL-19
+
+
+
+RMAN> exit
+
+
+Recovery Manager complete.
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$ sqlplus / as sysdba
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Sun Jul 28 20:31:33 2019
+Version 19.2.0.0.0
+
+Copyright (c) 1982, 2018, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.2.0.0.0
+
+SQL>
+SQL>
+SQL>
+SQL> show parameter controlfile;
+SQL> show parameter control_file
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- ------------------------------
+control_file_record_keep_time        integer     7
+control_files                        string      /u01/app/oracle/oradata/ORCL/c
+                                                 ontrol01.ctl, /u01/app/oracle/
+                                                 recovery_area/ORCL/control02.c
+                                                 tl, /u01/app/oracle/oradata/OR
+                                                 CL/control03.ctl
+SQL>
+SQL>
+SQL> desc v$datafile;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ FILE#                                              NUMBER
+ CREATION_CHANGE#                                   NUMBER
+ CREATION_TIME                                      DATE
+ TS#                                                NUMBER
+ RFILE#                                             NUMBER
+ STATUS                                             VARCHAR2(7)
+ ENABLED                                            VARCHAR2(10)
+ CHECKPOINT_CHANGE#                                 NUMBER
+ CHECKPOINT_TIME                                    DATE
+ UNRECOVERABLE_CHANGE#                              NUMBER
+ UNRECOVERABLE_TIME                                 DATE
+ LAST_CHANGE#                                       NUMBER
+ LAST_TIME                                          DATE
+ OFFLINE_CHANGE#                                    NUMBER
+ ONLINE_CHANGE#                                     NUMBER
+ ONLINE_TIME                                        DATE
+ BYTES                                              NUMBER
+ BLOCKS                                             NUMBER
+ CREATE_BYTES                                       NUMBER
+ BLOCK_SIZE                                         NUMBER
+ NAME                                               VARCHAR2(513)
+ PLUGGED_IN                                         NUMBER
+ BLOCK1_OFFSET                                      NUMBER
+ AUX_NAME                                           VARCHAR2(513)
+ FIRST_NONLOGGED_SCN                                NUMBER
+ FIRST_NONLOGGED_TIME                               DATE
+ FOREIGN_DBID                                       NUMBER
+ FOREIGN_CREATION_CHANGE#                           NUMBER
+ FOREIGN_CREATION_TIME                              DATE
+ PLUGGED_READONLY                                   VARCHAR2(3)
+ PLUGIN_CHANGE#                                     NUMBER
+ PLUGIN_RESETLOGS_CHANGE#                           NUMBER
+ PLUGIN_RESETLOGS_TIME                              DATE
+ CON_ID                                             NUMBER
+
+SQL> select name,status from  v$datafile;;
+select name,status from  v$datafile;
+                                   *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select name,status from  v$datafile;
+
+NAME
+--------------------------------------------------------------------------------
+STATUS
+-------
+/u01/app/oracle/oradata/ORCL/system01.dbf
+SYSTEM
+
+/u01/app/oracle/oradata/ORCL/sysaux01.dbf
+ONLINE
+
+/u01/app/oracle/oradata/ORCL/undotbs01.dbf
+ONLINE
+
+
+NAME
+--------------------------------------------------------------------------------
+STATUS
+-------
+/u01/app/oracle/oradata/ORCL/t01.dbf
+ONLINE
+
+/u01/app/oracle/oradata/ORCL/users01.dbf
+ONLINE
+
+
+SQL> !
+[oracle@db19c-7u6 ~]$ ifconfig
+ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.116.253  netmask 255.255.255.0  broadcast 192.168.116.255
+        inet6 fe80::d6ad:fdae:c32b:62c7  prefixlen 64  scopeid 0x20<link>
+        ether 00:0c:29:0b:b7:89  txqueuelen 1000  (Ethernet)
+        RX packets 1094413  bytes 1440355568 (1.3 GiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 539140  bytes 33116502 (31.5 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+ens37: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.116.252  netmask 255.255.255.0  broadcast 192.168.116.255
+        inet6 fe80::c1ed:33c5:c79d:541c  prefixlen 64  scopeid 0x20<link>
+        ether 00:0c:29:0b:b7:93  txqueuelen 1000  (Ethernet)
+        RX packets 173518  bytes 61150345 (58.3 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1609  bytes 289976 (283.1 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 0  (Local Loopback)
+        RX packets 73691  bytes 6037925 (5.7 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 73691  bytes 6037925 (5.7 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+virbr0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 192.168.122.1  netmask 255.255.255.0  broadcast 192.168.122.255
+        ether 52:54:00:cb:89:34  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$ exit
+exit
+
+SQL> shutdown immediate
+Database closed.
+Database dismounted.
+ORACLE instance shut down.
+SQL> startup
+ORACLE instance started.
+
+Total System Global Area  767554176 bytes
+Fixed Size                  8901248 bytes
+Variable Size             675282944 bytes
+Database Buffers           75497472 bytes
+Redo Buffers                7872512 bytes
+Database mounted.
+Database opened.
+SQL>
+SQL>
+SQL>
+SQL> !
+[oracle@db19c-7u6 ~]$ cd /u01/app/oracle/oradata/ORCL/
+[oracle@db19c-7u6 ORCL]$
+[oracle@db19c-7u6 ORCL]$
+[oracle@db19c-7u6 ORCL]$
+[oracle@db19c-7u6 ORCL]$ ll
+total 4946340
+-rw-r-----. 1 oracle oinstall   10633216 Jul 28 20:47 control01.ctl
+-rw-r-----  1 oracle oinstall   10633216 Jul 28 20:47 control03.ctl
+-rw-r-----. 1 oracle oinstall  209715712 Jul 28 20:39 redo01.log
+-rw-r-----. 1 oracle oinstall  209715712 Jul 28 20:46 redo02.log
+-rw-r-----. 1 oracle oinstall  209715712 Jul 28 20:39 redo03.log
+-rw-r-----. 1 oracle oinstall  786440192 Jul 28 20:45 sysaux01.dbf
+-rw-r-----. 1 oracle oinstall  954212352 Jul 28 20:45 system01.dbf
+-rw-r-----  1 oracle oinstall   10493952 Jul 28 20:42 t01.dbf
+-rw-r-----. 1 oracle oinstall 2591039488 Jul 28 20:28 temp01.dbf
+-rw-r-----. 1 oracle oinstall   68165632 Jul 28 20:45 undotbs01.dbf
+-rw-r-----. 1 oracle oinstall    5251072 Jul 28 20:39 users01.dbf
+[oracle@db19c-7u6 ORCL]$ rm -rf t01.dbf
+[oracle@db19c-7u6 ORCL]$
+[oracle@db19c-7u6 ORCL]$
+[oracle@db19c-7u6 ORCL]$ ll
+total 4936092
+-rw-r-----. 1 oracle oinstall   10633216 Jul 28 20:47 control01.ctl
+-rw-r-----  1 oracle oinstall   10633216 Jul 28 20:47 control03.ctl
+-rw-r-----. 1 oracle oinstall  209715712 Jul 28 20:39 redo01.log
+-rw-r-----. 1 oracle oinstall  209715712 Jul 28 20:47 redo02.log
+-rw-r-----. 1 oracle oinstall  209715712 Jul 28 20:39 redo03.log
+-rw-r-----. 1 oracle oinstall  786440192 Jul 28 20:47 sysaux01.dbf
+-rw-r-----. 1 oracle oinstall  954212352 Jul 28 20:47 system01.dbf
+-rw-r-----. 1 oracle oinstall 2591039488 Jul 28 20:28 temp01.dbf
+-rw-r-----. 1 oracle oinstall   68165632 Jul 28 20:45 undotbs01.dbf
+-rw-r-----. 1 oracle oinstall    5251072 Jul 28 20:39 users01.dbf
+[oracle@db19c-7u6 ORCL]$
+[oracle@db19c-7u6 ORCL]$
+[oracle@db19c-7u6 ORCL]$ exit
+exit
+
+SQL> shutdown force
+SP2-0717: illegal SHUTDOWN option
+SQL> shutdown abort
+ORACLE instance shut down.
+SQL>
+SQL>
+SQL>
+SQL>
+SQL> startup
+ORACLE instance started.
+
+Total System Global Area  767554176 bytes
+Fixed Size                  8901248 bytes
+Variable Size             675282944 bytes
+Database Buffers           75497472 bytes
+Redo Buffers                7872512 bytes
+Database mounted.
+ORA-01157: cannot identify/lock data file 5 - see DBWR trace file
+ORA-01110: data file 5: '/u01/app/oracle/oradata/ORCL/t01.dbf'
+
+
+SQL> SELECT name, error
+FROM v$datafile
+JOIN v$recover_file
+USING (file#);  2    3    4
+
+NAME
+--------------------------------------------------------------------------------
+ERROR
+-----------------------------------------------------------------
+/u01/app/oracle/oradata/ORCL/t01.dbf
+FILE NOT FOUND
+
+
+SQL> !
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$ cd /u01/app/oracle/oradata/ORCL/
+[oracle@db19c-7u6 ORCL]$
+[oracle@db19c-7u6 ORCL]$
+[oracle@db19c-7u6 ORCL]$ ll
+total 4936092
+-rw-r-----. 1 oracle oinstall   10633216 Jul 28 21:06 control01.ctl
+-rw-r-----  1 oracle oinstall   10633216 Jul 28 21:06 control03.ctl
+-rw-r-----. 1 oracle oinstall  209715712 Jul 28 20:39 redo01.log
+-rw-r-----. 1 oracle oinstall  209715712 Jul 28 20:47 redo02.log
+-rw-r-----. 1 oracle oinstall  209715712 Jul 28 20:39 redo03.log
+-rw-r-----. 1 oracle oinstall  786440192 Jul 28 20:48 sysaux01.dbf
+-rw-r-----. 1 oracle oinstall  954212352 Jul 28 20:48 system01.dbf
+-rw-r-----. 1 oracle oinstall 2591039488 Jul 28 20:28 temp01.dbf
+-rw-r-----. 1 oracle oinstall   68165632 Jul 28 20:48 undotbs01.dbf
+-rw-r-----. 1 oracle oinstall    5251072 Jul 28 20:39 users01.dbf
+[oracle@db19c-7u6 ORCL]$ rm -rf users01.dbf
+[oracle@db19c-7u6 ORCL]$
+[oracle@db19c-7u6 ORCL]$
+[oracle@db19c-7u6 ORCL]$
+[oracle@db19c-7u6 ORCL]$ ll
+total 4930964
+-rw-r-----. 1 oracle oinstall   10633216 Jul 28 21:06 control01.ctl
+-rw-r-----  1 oracle oinstall   10633216 Jul 28 21:06 control03.ctl
+-rw-r-----. 1 oracle oinstall  209715712 Jul 28 20:39 redo01.log
+-rw-r-----. 1 oracle oinstall  209715712 Jul 28 20:47 redo02.log
+-rw-r-----. 1 oracle oinstall  209715712 Jul 28 20:39 redo03.log
+-rw-r-----. 1 oracle oinstall  786440192 Jul 28 20:48 sysaux01.dbf
+-rw-r-----. 1 oracle oinstall  954212352 Jul 28 20:48 system01.dbf
+-rw-r-----. 1 oracle oinstall 2591039488 Jul 28 20:28 temp01.dbf
+-rw-r-----. 1 oracle oinstall   68165632 Jul 28 20:48 undotbs01.dbf
+[oracle@db19c-7u6 ORCL]$ exit
+exit
+
+SQL> alter database open;
+alter database open
+*
+ERROR at line 1:
+ORA-01157: cannot identify/lock data file 5 - see DBWR trace file
+ORA-01110: data file 5: '/u01/app/oracle/oradata/ORCL/t01.dbf'
+
+
+SQL>  SELECT name, error
+FROM v$datafile
+JOIN v$recover_file
+USING (file#);  2    3    4
+
+NAME
+--------------------------------------------------------------------------------
+ERROR
+-----------------------------------------------------------------
+/u01/app/oracle/oradata/ORCL/t01.dbf
+FILE NOT FOUND
+
+/u01/app/oracle/oradata/ORCL/users01.dbf
+FILE NOT FOUND
+
+
+SQL> select * from v$recover-file;
+select * from v$recover-file
+                       *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL>  select * from v$recover_file;
+
+     FILE# ONLINE  ONLINE_
+---------- ------- -------
+ERROR                                                                CHANGE#
+----------------------------------------------------------------- ----------
+TIME          CON_ID
+--------- ----------
+         5 ONLINE  ONLINE
+FILE NOT FOUND                                                             0
+                   0
+
+         7 ONLINE  ONLINE
+FILE NOT FOUND                                                             0
+                   0
+
+     FILE# ONLINE  ONLINE_
+---------- ------- -------
+ERROR                                                                CHANGE#
+----------------------------------------------------------------- ----------
+TIME          CON_ID
+--------- ----------
+
+
+SQL> restore datafile;
+SP2-0734: unknown command begin                                                                        ning "restore da..." - rest of                                                                         line ignored.
+SQL> !
+[oracle@db19c-7u6 ~]$ rman targ                                                                        et /
+
+Recovery Manager: Release 19.0.                                                                        0.0.0 - Production on Sun Jul 2                                                                        8 21:16:10 2019
+Version 19.2.0.0.0
+
+Copyright (c) 1982, 2019, Oracl                                                                        e and/or its affiliates.  All r                                                                        ights reserved.
+
+connected to target database: O                                                                        RCL (DBID=1531858278, not open)
+
+
+
+RMAN>
+
+RMAN> restore datafile 5,7;
+
+Starting restore at 28-JUL-19
+using target database control file instead of recovery catal                                           og
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=11 device type=DISK
+
+channel ORA_DISK_1: restoring datafile 00005
+input datafile copy RECID=1 STAMP=1014841697 file name=/u01/                                           app/oracle/recovery_area/ORCL/datafile/o1_mf_t_gmvd81sv_.dbf
+destination for restore of datafile 00005: /u01/app/oracle/o                                           radata/ORCL/t01.dbf
+channel ORA_DISK_1: copied datafile copy of datafile 00005,                                            elapsed time: 00:00:01
+output file name=/u01/app/oracle/oradata/ORCL/t01.dbf RECID=                                           0 STAMP=0
+channel ORA_DISK_1: starting datafile backup set restore
+channel ORA_DISK_1: specifying datafile(s) to restore from b                                           ackup set
+channel ORA_DISK_1: restoring datafile 00007 to /u01/app/ora                                           cle/oradata/ORCL/users01.dbf
+channel ORA_DISK_1: reading from backup piece /u01/app/oracl                                           e/recovery_area/ORCL/backupset/2019_07_28/o1_mf_nnnd0_TAG201                                           90728T202201_gmvcwb41_.bkp
+channel ORA_DISK_1: piece handle=/u01/app/oracle/recovery_ar                                           ea/ORCL/backupset/2019_07_28/o1_mf_nnnd0_TAG20190728T202201_                                           gmvcwb41_.bkp tag=TAG20190728T202201
+channel ORA_DISK_1: restored backup piece 1
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:01
+Finished restore at 28-JUL-19
+
+RMAN> recover database;
+
+Starting recover at 28-JUL-19
+using channel ORA_DISK_1
+channel ORA_DISK_1: starting incremental datafile backup set                                            restore
+channel ORA_DISK_1: specifying datafile(s) to restore from b                                           ackup set
+destination for restore of datafile 00007: /u01/app/oracle/o                                           radata/ORCL/users01.dbf
+channel ORA_DISK_1: reading from backup piece /u01/app/oracl                                           e/recovery_area/ORCL/backupset/2019_07_28/o1_mf_nnnd1_TAG201                                           90728T202334_gmvcz6xb_.bkp
+channel ORA_DISK_1: piece handle=/u01/app/oracle/recovery_ar                                           ea/ORCL/backupset/2019_07_28/o1_mf_nnnd1_TAG20190728T202334_                                           gmvcz6xb_.bkp tag=TAG20190728T202334
+channel ORA_DISK_1: restored backup piece 1
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:01
+channel ORA_DISK_1: starting incremental datafile backup set                                            restore
+channel ORA_DISK_1: specifying datafile(s) to restore from b                                           ackup set
+destination for restore of datafile 00007: /u01/app/oracle/o                                           radata/ORCL/users01.dbf
+channel ORA_DISK_1: reading from backup piece /u01/app/oracl                                           e/recovery_area/ORCL/backupset/2019_07_28/o1_mf_nnnd1_TAG201                                           90728T202648_gmvd5868_.bkp
+channel ORA_DISK_1: piece handle=/u01/app/oracle/recovery_ar                                           ea/ORCL/backupset/2019_07_28/o1_mf_nnnd1_TAG20190728T202648_                                           gmvd5868_.bkp tag=TAG20190728T202648
+channel ORA_DISK_1: restored backup piece 1
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:01
+
+starting media recovery
+media recovery complete, elapsed time: 00:00:00
+
+Finished recover at 28-JUL-19
+
+RMAN>
+
+RMAN>
+
+RMAN> alter database open;
+
+Statement processed
+
+RMAN>
+
+RMAN>
+
+RMAN>
+
+
+RMAN>
+
+RMAN> exit
+
+
+Recovery Manager complete.
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$ exit
+exit
+
+SQL>
+SQL>
+SQL> show parameter archive
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- ------------------------------
+archive_lag_target                   integer     0
+log_archive_config                   string
+log_archive_dest                     string
+log_archive_dest_1                   string      LOCATION=/archivelog
+log_archive_dest_10                  string      LOCATION=USE_DB_RECOVERY_FILE_
+                                                 DEST
+log_archive_dest_11                  string
+log_archive_dest_12                  string
+log_archive_dest_13                  string
+log_archive_dest_14                  string
+log_archive_dest_15                  string
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- ------------------------------
+log_archive_dest_16                  string
+log_archive_dest_17                  string
+log_archive_dest_18                  string
+log_archive_dest_19                  string
+log_archive_dest_2                   string
+log_archive_dest_20                  string
+log_archive_dest_21                  string
+log_archive_dest_22                  string
+log_archive_dest_23                  string
+log_archive_dest_24                  string
+log_archive_dest_25                  string
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- ------------------------------
+log_archive_dest_26                  string
+log_archive_dest_27                  string
+log_archive_dest_28                  string
+log_archive_dest_29                  string
+log_archive_dest_3                   string
+log_archive_dest_30                  string
+log_archive_dest_31                  string
+log_archive_dest_4                   string
+log_archive_dest_5                   string
+log_archive_dest_6                   string
+log_archive_dest_7                   string
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- ------------------------------
+log_archive_dest_8                   string
+log_archive_dest_9                   string
+log_archive_dest_state_1             string      enable
+log_archive_dest_state_10            string      enable
+log_archive_dest_state_11            string      enable
+log_archive_dest_state_12            string      enable
+log_archive_dest_state_13            string      enable
+log_archive_dest_state_14            string      enable
+log_archive_dest_state_15            string      enable
+log_archive_dest_state_16            string      enable
+log_archive_dest_state_17            string      enable
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- ------------------------------
+log_archive_dest_state_18            string      enable
+log_archive_dest_state_19            string      enable
+log_archive_dest_state_2             string      enable
+log_archive_dest_state_20            string      enable
+log_archive_dest_state_21            string      enable
+log_archive_dest_state_22            string      enable
+log_archive_dest_state_23            string      enable
+log_archive_dest_state_24            string      enable
+log_archive_dest_state_25            string      enable
+log_archive_dest_state_26            string      enable
+log_archive_dest_state_27            string      enable
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- ------------------------------
+log_archive_dest_state_28            string      enable
+log_archive_dest_state_29            string      enable
+log_archive_dest_state_3             string      enable
+log_archive_dest_state_30            string      enable
+log_archive_dest_state_31            string      enable
+log_archive_dest_state_4             string      enable
+log_archive_dest_state_5             string      enable
+log_archive_dest_state_6             string      enable
+log_archive_dest_state_7             string      enable
+log_archive_dest_state_8             string      enable
+log_archive_dest_state_9             string      enable
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- ------------------------------
+log_archive_duplex_dest              string
+log_archive_format                   string      %t_%s_%r.arc
+log_archive_max_processes            integer     4
+log_archive_min_succeed_dest         integer     1
+log_archive_start                    boolean     FALSE
+log_archive_trace                    integer     0
+SQL>
+SQL>
+SQL> select log_mode from v$database;
+
+LOG_MODE
+------------
+ARCHIVELOG
+
+SQL>
+SQL> archive log list;
+Database log mode              Archive Mode
+Automatic archival             Enabled
+Archive destination            USE_DB_RECOVERY_FILE_DEST
+Oldest online log sequence     37
+Next log sequence to archive   39
+Current log sequence           39
+SQL> !
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$ rm -rf /u01/app/oracle/oradata/ORCL/t01.dbf
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$
+[oracle@db19c-7u6 ~]$ exit
+exit
+
+SQL> shutdown abort
+ORACLE instance shut down.
+SQL>
+SQL>
+SQL> startup
+ORACLE instance started.
+
+Total System Global Area  767554176 bytes
+Fixed Size                  8901248 bytes
+Variable Size             675282944 bytes
+Database Buffers           75497472 bytes
+Redo Buffers                7872512 bytes
+Database mounted.
+ORA-01157: cannot identify/lock data file 5 - see DBWR trace file
+ORA-01110: data file 5: '/u01/app/oracle/oradata/ORCL/t01.dbf'
+
+
+SQL> select * from v$recover_file;
+
+     FILE# ONLINE  ONLINE_
+---------- ------- -------
+ERROR                                                                CHANGE#
+----------------------------------------------------------------- ----------
+TIME          CON_ID
+--------- ----------
+         5 ONLINE  ONLINE
+FILE NOT FOUND                                                             0
+                   0
+
+
+SQL> SELECT name, error
+FROM v$datafile
+JOIN v$recover_file
+USING (file#);  2    3    4
+
+NAME
+--------------------------------------------------------------------------------
+ERROR
+-----------------------------------------------------------------
+/u01/app/oracle/oradata/ORCL/t01.dbf
+FILE NOT FOUND
+
+
+SQL> !
+[oracle@db19c-7u6 ~]$ rman target /
+
+Recovery Manager: Release 19.0.0.0.0 - Production on Sun Jul 28 21:37:03 2019
+Version 19.2.0.0.0
+
+Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
+
+connected to target database: ORCL (DBID=1531858278, not open)
+
+RMAN>
+
+RMAN>
+
+RMAN>
+
+RMAN> list failure all;
+
+using target database control file instead of recovery catalog
+Database Role: PRIMARY
+
+List of Database Failures
+=========================
+
+Failure ID Priority Status    Time Detected Summary
+---------- -------- --------- ------------- -------
+748        HIGH     OPEN      28-JUL-19     One or more non-system datafiles are missing
+
+
+RMAN> advise failure;
+
+Database Role: PRIMARY
+
+List of Database Failures
+=========================
+
+Failure ID Priority Status    Time Detected Summary
+---------- -------- --------- ------------- -------
+748        HIGH     OPEN      28-JUL-19     One or more non-system datafiles are missing
+
+analyzing automatic repair options; this may take some time
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=136 device type=DISK
+analyzing automatic repair options complete
+
+Mandatory Manual Actions
+========================
+no manual actions available
+
+Optional Manual Actions
+=======================
+1. If file /u01/app/oracle/oradata/ORCL/t01.dbf was unintentionally renamed or moved, restore it
+
+Automated Repair Options
+========================
+Option Repair Description
+------ ------------------
+1      Restore and recover datafile 5
+  Strategy: The repair includes complete media recovery with no data loss
+  Repair script: /u01/app/oracle/diag/rdbms/orcl/orcl/hm/reco_4024812170.hm
+
+RMAN> @/u01/app/oracle/diag/rdbms/orcl/orcl/hm/reco_4024812170.hm
+
+RMAN>    # restore and recover datafile
+2>    restore ( datafile 5 );
+Starting restore at 28-JUL-19
+using channel ORA_DISK_1
+
+channel ORA_DISK_1: restoring datafile 00005
+input datafile copy RECID=1 STAMP=1014841697 file name=/u01/app/oracle/recovery_area/ORCL/datafile/o1_mf_t_gmvd81sv_.dbf
+destination for restore of datafile 00005: /u01/app/oracle/oradata/ORCL/t01.dbf
+channel ORA_DISK_1: copied datafile copy of datafile 00005, elapsed time: 00:00:01
+output file name=/u01/app/oracle/oradata/ORCL/t01.dbf RECID=0 STAMP=0
+Finished restore at 28-JUL-19
+
+RMAN>    recover datafile 5;
+Starting recover at 28-JUL-19
+using channel ORA_DISK_1
+
+starting media recovery
+media recovery complete, elapsed time: 00:00:00
+
+Finished recover at 28-JUL-19
+
+RMAN>    sql 'alter database datafile 5 online';
+sql statement: alter database datafile 5 online
+
+RMAN> **end-of-file**
+
+RMAN> alter database open;
+
+Statement processed
+
+RMAN>
+
+
+
+
+
+
+
+
+
+
+
+select * from v$log;
+
+select * from v$tablespace;
+select file#,d.ts#,d.name datafile, t.name tablespace from v$datafile d
+join v$tablespace t on d.ts#=t.ts# ;
+
+create table tbl tablespace t as select  *from user_tables;
+
+select * from tbl;
