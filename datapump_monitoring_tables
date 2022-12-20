@@ -29,3 +29,8 @@ SELECT s.inst_id,
 FROM   gv$session s
        JOIN gv$process p ON p.addr = s.paddr AND p.inst_id = s.inst_id
 WHERE  s.type != 'BACKGROUND';
+
+################### TEMP tablespace size #############
+
+select inst_id, tablespace_name, total_blocks, used_blocks, free_blocks
+from gv$sort_segment;
