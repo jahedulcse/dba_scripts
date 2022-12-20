@@ -1,4 +1,4 @@
-************ Multiple User drop *************
+############ Multiple User drop #######################
 
 begin
   for rec in (select username 
@@ -10,3 +10,6 @@ begin
   end loop;          
 end;
 /
+
+
+############## Multiple Table drop #########################
