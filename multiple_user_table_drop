@@ -13,3 +13,15 @@ end;
 
 
 ############## Multiple Table drop #########################
+
+begin
+  for rec in (select table_name 
+              from   all_tables 
+              where  table_name in ('TEST1','TEST2')
+              and owner='USER_NAME'
+             )
+  loop
+    execute immediate 'drop table '||rec.table_name;
+  end loop;          
+end;
+/
