@@ -1,0 +1,15 @@
+############ Specific User export, import ####################
+
+expdp system/system@policy full=y directory=DATA_PUMP_DIR_TEST dumpfile=digitalpr_others.dmp logfile=digitalpr_others.log
+include=SCHEMA:"in\('SHAHIDUL'\,'DIGITALPR'\)"
+
+impdp system/system@policy full=y directory=DATA_PUMP_DIR_TEST dumpfile=full_policy-2022120621.dmp logfile=197_update_15122022.log
+exclude=SCHEMA:"in\('SHAHIDUL'\,'DIGITALPR'\,'GRP'\,'MAIL'\,'EQUIPMENT'\,'INVENTORY'\,'AGM'\,'REINS'\,'GATEPASS'\)"
+
+
+impdp system/system@policy full=y directory=DATA_PUMP_DIR_TEST dumpfile=full_policy-2022120621.dmp logfile=197_update_15122022.log
+include=SCHEMA:"in\('OSMAN'\)"
+
+impdp system/system@policy full=y directory=DATA_PUMP_DIR_TEST dumpfile=full_policy-2022120621.dmp logfile=test_SB_POLICY.log
+include=SCHEMA:"in\('SB_POLICY'\)" segment_attributes:n
+----ORA-14460: only one COMPRESS or NOCOMPRESS clause may be specified   ----> segment_attributes:n
