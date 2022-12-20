@@ -1,7 +1,9 @@
 =============Oracle XML database  ===============
 
 ------ Oracle XML built in create in "XDB" user 
------- When we drop user "xdb" then export,import can't perform
+------ When we drop user "xdb" then export,import can't perform.
+------ we can solution this problem by performing catqm.sql
+----- catqm location ---- $ORACLE_HOME/rdbms/admin
 
 https://docs.oracle.com/cd/B13789_01/appdev.101/b10790/appaman.htm
 -- catqm.sql    ---> install xdb
