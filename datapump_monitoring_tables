@@ -2,5 +2,5 @@
 select * from dba_datapump_jobs;
 select * from dba_datapump_sessions;
 select * from v$session_wait;
-select * from dba_resumable;
+select * from dba_resumable;  **********
 select * from v$parameter;
