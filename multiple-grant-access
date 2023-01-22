@@ -9,3 +9,120 @@ BEGIN
     EXECUTE IMMEDIATE 'grant select on ' || x.owner || '.' || x.object_name || ' to ABC';
   END LOOP;
 END;
+
+*********************************************************************
+
+Grant Privilege on all objects in a Schema to a user
+In this example I have given select on all tables in schema test1 to user test2. As well grant all DML privilege on tables and views, and grant execute on procedures,functions and packages in a schema test1 to user test2.
+==========================================================================
+ 
+
+SQL>create user test1 identified by test1;
+
+User created.
+
+SQL> grant connect,resource to test1;
+
+Grant succeeded.
+
+SQL> create user test2 identified by test2;
+
+User created.
+
+SQL> grant connect,resource to test2;
+
+Grant succeeded.
+
+
+SQL> conn test1/test1
+Connected.
+
+
+SQL> create table test_table1(id number,name varchar2(30));
+
+Table created.
+
+SQL> create table test_table2(id number,name varchar2(30));
+
+Table created.
+
+
+SQL> show user;
+USER is "TEST1"
+
+If you want to grant select privilege:
+
+
+SQL>
+BEGIN
+    FOR t IN (SELECT * FROM user_tables) 
+    LOOP   
+        EXECUTE IMMEDIATE 'GRANT SELECT ON ' || t.table_name || ' TO test2';    
+    END LOOP;
+END;
+
+/
+
+If you want to grant select,insert,update,delete privilege on tables and views and grant execute on procedure,function and package:
+
+SQL>
+
+BEGIN
+  FOR t IN (SELECT object_name, object_type FROM all_objects WHERE owner='TEST1' AND object_type IN ('TABLE','VIEW','PROCEDURE','FUNCTION','PACKAGE')) LOOP
+    IF t.object_type IN ('TABLE','VIEW') THEN
+      EXECUTE IMMEDIATE 'GRANT SELECT, UPDATE, INSERT, DELETE ON SOURCEUSER.'||t.object_name||' TO TEST2';
+    ELSIF t.object_type IN ('PROCEDURE','FUNCTION','PACKAGE') THEN
+      EXECUTE IMMEDIATE 'GRANT EXECUTE ON TEST1.'||t.object_name||' TO TEST2';
+    END IF;
+  END LOOP;
+END;
+
+/
+
+ 
+
+Best approach is:
+
+1. Create a role with appropriate grant
+
+2. grant the role to the user
+
+ 
+
+SQL> create role support;
+
+ 
+
+If want to grant select privilege:
+
+SQL>
+BEGIN
+    FOR t IN (SELECT * FROM user_tables) 
+    LOOP   
+        EXECUTE IMMEDIATE 'GRANT SELECT ON ' || t.table_name || ' TO support';    
+    END LOOP;
+END;
+
+/
+
+SQL> grant support to test2;
+
+ 
+
+If you want to grant select,insert,update,delete privilege on tables and views and grant execute on procedure,function and package:
+
+SQL>
+
+BEGIN
+  FOR t IN (SELECT object_name, object_type FROM all_objects WHERE owner='TEST1' AND object_type IN ('TABLE','VIEW','PROCEDURE','FUNCTION','PACKAGE')) LOOP
+    IF t.object_type IN ('TABLE','VIEW') THEN
+      EXECUTE IMMEDIATE 'GRANT SELECT, UPDATE, INSERT, DELETE ON SOURCEUSER.'||t.object_name||' TO SUPPORT';
+    ELSIF t.object_type IN ('PROCEDURE','FUNCTION','PACKAGE') THEN
+      EXECUTE IMMEDIATE 'GRANT EXECUTE ON TEST1.'||t.object_name||' TO SUPPORT';
+    END IF;
+  END LOOP;
+END;
+
+/
+
+SQL> grant support to test2; 
