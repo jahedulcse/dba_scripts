@@ -1,0 +1,11 @@
+BEGIN
+  FOR x IN (
+      SELECT * 
+        FROM dba_objects
+       WHERE object_type IN ('TABLE', 'VIEW', 'SEQUENCE' )
+         AND owner IN ('XYZ', 'PQR' )
+  )
+  LOOP
+    EXECUTE IMMEDIATE 'grant select on ' || x.owner || '.' || x.object_name || ' to ABC';
+  END LOOP;
+END;
