@@ -50,7 +50,7 @@ Table created.
 SQL> show user;
 USER is "TEST1"
 
-If you want to grant select privilege:
+==============If you want to grant select privilege:
 
 
 SQL>
@@ -63,7 +63,7 @@ END;
 
 /
 
-If you want to grant select,insert,update,delete privilege on tables and views and grant execute on procedure,function and package:
+=================If you want to grant select,insert,update,delete privilege on tables and views and grant execute on procedure,function and package:
 
 SQL>
 
@@ -81,7 +81,7 @@ END;
 
  
 
-Best approach is:
+========Best approach is:
 
 1. Create a role with appropriate grant
 
@@ -93,7 +93,7 @@ SQL> create role support;
 
  
 
-If want to grant select privilege:
+=========If want to grant select privilege:
 
 SQL>
 BEGIN
@@ -109,7 +109,7 @@ SQL> grant support to test2;
 
  
 
-If you want to grant select,insert,update,delete privilege on tables and views and grant execute on procedure,function and package:
+===========If you want to grant select,insert,update,delete privilege on tables and views and grant execute on procedure,function and package:
 
 SQL>
 
