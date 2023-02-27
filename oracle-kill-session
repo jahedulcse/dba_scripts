@@ -1,0 +1,14 @@
+=========== kill specific session
+
+SQL> ALTER SYSTEM DISCONNECT SESSION 'sid,serial#' POST_TRANSACTION;
+SQL> ALTER SYSTEM DISCONNECT SESSION 'sid,serial#' IMMEDIATE;
+
+========== kill all session for user
+
+BEGIN
+  FOR r IN (select sid,serial# from v$session where username = 'USER')
+  LOOP
+    EXECUTE IMMEDIATE 'alter system kill session ''' || r.sid 
+      || ',' || r.serial# || '''';
+  END LOOP;
+END;
