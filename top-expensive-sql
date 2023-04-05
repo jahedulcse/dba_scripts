@@ -1,0 +1,28 @@
+# How to Find top 10 expensive sql -Oracle
+
+SELECT
+    sql_id,
+    child_number,
+    sql_fulltext,
+    elapsed_time,
+    executions,
+    round(elapsed_time_avg) elapsed_time_avg
+FROM
+    (
+        SELECT
+            command_type,
+            sql_id,
+            child_number,
+            sql_fulltext,
+            elapsed_time,
+            cpu_time,
+            disk_reads,
+            executions,
+            ( elapsed_time / executions ) elapsed_time_avg
+        FROM
+            v$sql
+        WHERE
+            executions > 0
+        order by  elapsed_time_avg  desc 
+    )
+    where rownum <=10;
