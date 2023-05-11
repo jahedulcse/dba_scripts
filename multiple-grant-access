@@ -125,4 +125,15 @@ END;
 
 /
 
-SQL> grant support to test2; 
+SQL> grant support to test2;
+
+====================================================
+========== If you only want to show all objects of all users with all codes then provide following previleges to a user
+
+SQL> create user t1 identified by t1;
+SQL> grant create session,select any dictionary,select any table to t1;
+
+
+
+
+
