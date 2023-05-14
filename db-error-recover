@@ -1,5 +1,6 @@
 ######## How to Fix ORA-00257: archiver error. Connect internal only, until freed
-
+-- The most likely cause of this message is the destination device is out of space to store the redo log file.
+--- Solution -------
 show parameter db_recovery_file_dest_size;
 alter system set db_recovery_file_dest_size=120g scope=both;
 shutdown immediate;
