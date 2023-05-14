@@ -1,6 +1,9 @@
 
 ############ Specific User export, import ####################
 
+Create directory dir_name as 'D:\scripts';
+GRANT READ,WRITE ON DIRECTORY dir_Name TO user_Name;
+
 expdp system/system@policy full=y directory=DATA_PUMP_DIR_TEST dumpfile=digitalpr_others.dmp logfile=digitalpr_others.log
 include=SCHEMA:"in\('SHAHIDUL'\,'DIGITALPR'\)"
 
