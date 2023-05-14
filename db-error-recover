@@ -1,0 +1,20 @@
+# How to Fix ORA-00257: archiver error. Connect internal only, until freed
+
+show parameter db_recovery_file_dest_size;
+alter system set db_recovery_file_dest_size=120g scope=both;
+shutdown immediate;
+startup;
+
+###### database shutdown process hang or can't process
+Increase value to "db_recovery_file_dest_size"
+
+########## MMON background process is dead
+
+QL> alter system set db_recovery_file_dest_size=400g scope=both;
+alter system set db_recovery_file_dest_size=400g scope=both;
+*
+ERROR at line 1:
+ORA-00453: backgroud process 'MMON' is dead
+--------- Solution -----------
+$ ps -fe | grep mmon
+QL> alter system enable restricted session;
