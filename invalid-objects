@@ -1,0 +1,16 @@
+===== Fin Invalid Objects
+SELECT OWNER, OBJECT_TYPE, OBJECT_NAME 
+FROM DBA_OBJECTS
+WHERE STATUS != ‘VALID’ 
+ORDER BY OWNER, OBJECT_TYPE;
+
+OR
+
+SELECT OWNER, STATUS FROM DBA_OBJECTS 
+WEHRE STATUS !=’VALID’
+GROUP BY OWNER, STATUS;
+
+======= Recompiling Invalid Objects
+EXEC UTL_RECOMP.recomp_serial(‘schema name’);   --> Oracle 9i
+
+EXEC DBMS_UTILITY.COMPILE_SCHEMA(‘SCOTT’);      --> 10g and above
