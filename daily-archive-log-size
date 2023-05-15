@@ -1,0 +1,29 @@
+######### Check archive log size
+######Check archive generation size via below query
+
+select to_char(COMPLETION_TIME,'DD-MON-YYYY') Arch_Date,count(*) No#_Logs,
+sum((BLOCKS*512)/1024/1024/1024) Arch_LogSize_GB 
+from v$archived_log 
+where to_char(COMPLETION_TIME,'DD-MON-YYYY')>=trunc(sysdate-7) and DEST_ID=1
+group by to_char(COMPLETION_TIME,'DD-MON-YYYY')
+order by to_char(COMPLETION_TIME,'DD-MON-YYYY');
+
+Let us assume the average archive log files size generated per day is 5 GB. Your application team wants you to enable
+FLASHBACK for 4 days. In this case you will need Approx 20 GB (5GB X 4Days) of space for flashback logs.
+
+##########Estimate flashback destination size
+Sometimes application team will ask DBA to enable flashback for x number of days. In such case, a DBA needs to estimate the
+flashback space required for x number of days in order to store the flashback logs. The flashback log size is same as archive
+log size generated in a database.
+
+Method to estimate flashback space 
+
+Check archive log size 
+
+
+Method to estimate flashback space
+---------------
+Check the archive generation size via below query
+Take the average per day size of archives generated
+Multiply the average archive size with x number of days
+Ask storage team to add the required space for flashback file system
