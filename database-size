@@ -1,0 +1,61 @@
+Check db size – large database
+
+For very big databases where the size run into multiple GB or TB, below command will help you get a bird’s eye
+view on the database size, used space and free space.
+
+Please Note: this query rounds off the output and hence does not show you the exact utilization
+------------------------------------------
+col "Database Size" format a20
+col "Free space" format a20
+col "Used space" format a20
+select round(sum(used.bytes) / 1024 / 1024 / 1024 ) || ' GB' "Database Size"
+, round(sum(used.bytes) / 1024 / 1024 / 1024 ) -
+round(free.p / 1024 / 1024 / 1024) || ' GB' "Used space"
+, round(free.p / 1024 / 1024 / 1024) || ' GB' "Free space"
+from (select bytes
+from v$datafile
+union all
+select bytes
+from v$tempfile
+union all
+select bytes
+from v$log) used
+, (select sum(bytes) as p
+from dba_free_space) free
+group by free.p
+/
+
+
+####### Exact database size
+
+The size of the database is the space the files physically consume on disk. You can find this with
+
+select
+"Reserved_Space(GB)", "Reserved_Space(GB)" - "Free_Space(GB)" "Used_Space(GB)",
+"Free_Space(GB)"
+from(
+select 
+(select sum(bytes/(1014*1024*1024)) from dba_data_files) "Reserved_Space(GB)",
+(select sum(bytes/(1024*1024*1024)) from dba_free_space) "Free_Space(GB)"
+from dual
+);
+
+
+Analyzing query output
+
+When you run the above query, you will see below output
+
+Reserved_Space(GB) Used_Space(GB) Free_Space(GB)
+------------------ -------------- --------------
+        1.43491124     1.34488439     .090026855
+We can see that 1.4 GB is the allocated space across all the data files in the database. Out of the 1.4 GB allocated segments,
+1.3 GB is used and 0.09 GB is free space.
+
+
+
+###### Check users & space used
+
+We can even check the amount of disk space used by users inside the database using below query
+
+select owner, sum(bytes)/1024/1024 Size_MB from dba_segments
+group  by owner;
