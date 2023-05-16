@@ -1,0 +1,119 @@
+### DataPump Export/Import From SQL*Plus
+You can invoke DataPump export / import inside SQL*Plus even if you do not have access to OS level EXPDP / IMPDP utility.
+It replaces traditional export/import utilities and provides a much more efficient way to move large amounts of data.
+Let's start the Export and Import using DBMS_DATAPUMP PL/SQL API. 
+
+Export Schema Using DBMS_DATAPUMP 
+
+Import Schema Using DBMS_DATAPUMP 
+
+
+######### Export Schema Using DBMS_DATAPUMP
+
+We will export the table from testuser1 from ORCL Database to testuser1 to PROD Database. Create a directory for dumps and log
+
+mkdir -p /u01/dp
+Create an Oracle directory object pointing to the physical location
+
+create or replace directory test_dir AS '/u01/dp';
+grant read, write on directory test_dir to testuser1;
+Let's export EMP table from testuser1 schema
+-----------------------------------------------------------------------------
+declare
+  l_dp_handle       number;
+begin
+  -- Open a table export job.
+  l_dp_handle := dbms_datapump.open(
+    operation   => 'EXPORT',
+    job_mode    => 'TABLE',
+    remote_link => NULL,
+    job_name    => 'TESTUSER1_EMP_EXPORT',
+    version     => 'LATEST');
+
+  -- Specify the dump file name and directory object name.
+  dbms_datapump.add_file(
+    handle    => l_dp_handle,
+    filename  => 'TESTUSER1_EMP.dmp',
+    directory => 'TEST_DIR');
+
+  -- Specify the log file name and directory object name.
+  dbms_datapump.add_file(
+    handle    => l_dp_handle,
+    filename  => 'expdpTESTUSER1_EMP.log',
+    directory => 'TEST_DIR',
+    filetype  => DBMS_DATAPUMP.KU$_FILE_TYPE_LOG_FILE);
+
+  -- Specify the table to be exported, filtering the schema and table.
+  dbms_datapump.metadata_filter(
+    handle => l_dp_handle,
+    name   => 'SCHEMA_EXPR',
+    value  => '= ''TESTUSER1''');
+
+  dbms_datapump.metadata_filter(
+    handle => l_dp_handle,
+    name   => 'NAME_EXPR',
+    value  => '= ''EMP''');
+
+  dbms_datapump.start_job(l_dp_handle);
+
+  dbms_datapump.detach(l_dp_handle);
+end;
+/
+
+Let's review the log file to verify the export status and be sure.
+
+
+
+################ Import Schema Using DBMS_DATAPUMP
+
+Create an Oracle directory object pointing to the physical location on target server
+
+create or replace directory test_dir AS '/u01/dp';
+grant read, write on directory test_dir to testuser1;
+Let's import EMP table in testuser1 schema and change table name to EMP2
+-----------------------------------------------------------------------------------------
+declare
+  l_dp_handle       number;
+begin
+  -- Open a schema import job.
+  l_dp_handle := dbms_datapump.open(
+    operation   => 'IMPORT',
+    job_mode    => 'TABLE',
+    remote_link => NULL,
+    job_name    => 'TESTUSER1_EMP_IMPORT',
+    version     => 'LATEST');
+
+  -- Specify the dump file name and directory object name.
+  dbms_datapump.add_file(
+    handle    => l_dp_handle,
+    filename  => 'TESTUSER1_EMP.dmp',
+    directory => 'TEST_DIR');
+
+  -- Specify the log file name and directory object name.
+  dbms_datapump.add_file(
+    handle    => l_dp_handle,
+    filename  => 'impdpTESTUSER1_EMP_IMPORT.log',
+    directory => 'TEST_DIR',
+    filetype  => DBMS_DATAPUMP.KU$_FILE_TYPE_LOG_FILE);
+
+  -- Perform a REMAP_TABLE from EMP to EMP2.
+  dbms_datapump.metadata_remap(
+    handle     => l_dp_handle,
+    name       => 'REMAP_TABLE',
+    old_value  => 'EMP',
+    value      => 'EMP2');
+
+  dbms_datapump.start_job(l_dp_handle);
+
+  dbms_datapump.detach(l_dp_handle);
+end;
+/
+
+
+Note: As it is a table import, make sure the schema is already created.
+
+Let's verify the table in the PROD database
+
+
+
+Thank you!
