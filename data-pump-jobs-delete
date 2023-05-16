@@ -1,0 +1,57 @@
+################## How to delete/remove non executing datapump jobs?
+
+1. First we need to identify which jobs are in NOT RUNNING status. For this, we need to use below query (basically we are getting this info from dba_datapump_jobs)
+
+SET lines 200
+
+==== Table ======
+dba_datapump_sessions
+dba_datapump_jobs
+user_datapump_jobs
+
+
+SELECT owner_name, job_name, operation, job_mode,
+state, attached_sessions
+FROM dba_datapump_jobs
+ORDER BY 1,2;
+
+The above query will give the datapump jobs information and it will look like below
+
+OWNER_NAME JOB_NAME            OPERATION JOB_MODE  STATE       ATTACHED
+———- ——————- ——— ——— ———– ——–
+SCOTT      SYS_EXPORT_TABLE_01 EXPORT    TABLE     NOT RUNNING        0
+SCOTT      SYS_EXPORT_TABLE_02 EXPORT    TABLE     NOT RUNNING        0
+SYSTEM     SYS_EXPORT_FULL_01  EXPORT    FULL      NOT RUNNING        0
+
+In the above output, you can see state is showing as NOT RUNNING and those jobs need to be removed.
+
+Note: Please note that jobs state will be showing as NOT RUNNING even if a user wantedly stopped it. So before taking any action, consult the user and get confirmed
+
+2. we need to now identify the master tables which are created for these jobs. It can be done as follows
+
+SELECT o.status, o.object_id, o.object_type,
+       o.owner||’.’||object_name “OWNER.OBJECT”
+  FROM dba_objects o, dba_datapump_jobs j
+ WHERE o.owner=j.owner_name AND o.object_name=j.job_name
+   AND j.job_name NOT LIKE ‘BIN$%’ ORDER BY 4,2;
+
+STATUS   OBJECT_ID OBJECT_TYPE  OWNER.OBJECT
+——- ———- ———— ————————-
+VALID        85283 TABLE        SCOTT.EXPDP_20051121
+VALID        85215 TABLE        SCOTT.SYS_EXPORT_TABLE_02
+VALID        85162 TABLE        SYSTEM.SYS_EXPORT_FULL_01
+
+3. we need to now drop these master tables in order to cleanup the jobs
+
+SQL> DROP TABLE SYSTEM.SYS_EXPORT_FULL_01;
+SQL> DROP TABLE SCOTT.SYS_EXPORT_TABLE_02 ;
+SQL> DROP TABLE SCOTT.EXPDP_20051121;
+
+4. Re-run the query which is used in step 1 to check if still any jobs are showing up. If so, we need to stop the jobs once again using STOP_JOB parameter in expdp or DBMS_DATAPUMP.STOP_JOB package
+
+Some imp points:
+
+1. Datapump jobs that are not running doesn’t have any impact on currently executing ones.
+2. When any datapump job (either export or import) is initiated, master and worker processes will be created.
+3. When we terminate export datapump job, master and worker processes will get killed and it doesn’t lead to data courrption.
+4. But when import datapump job is terminated, complete import might not have done as processes(master & worker)  will be killed.
