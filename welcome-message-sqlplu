@@ -1,0 +1,16 @@
+##### Setup glogin.sql in Oracle
+### Open the glogin.sql file
+
+vi $ORACLE_HOME/sqlplus/admin/glogin.sql
+
+### Put below query at the end of the file
+
+select 'Welcome, you are connected to '||name||' database' "Hello" from v$database;
+
+Save and close. That's it, now whenever you login to SQL*PLUS, you will be greeted with a nice welcome message!
+
+I would like to display below message every time a user logs into the database
+
+Hello
+-----------------------------------------------
+Welcome, You are connected to TESTDB database
