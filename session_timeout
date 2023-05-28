@@ -1,25 +1,62 @@
 ############### CONNECT_TIME and IDLE_TIME in Oracle profile
 
---------- Check the idle time and connect time value for a profile
+1. Create a new profile
+Parameter set according to your need.
 
-SELECT * FROM DBA_PROFILES WHERE PROFILE='DEFAULT' AND RESOURCE_NAME IN ('IDLE_TIME','CONNECT_TIME');
+CREATE PROFILE app_user LIMIT
+  SESSIONS_PER_USER UNLIMITED
+  CPU_PER_SESSION UNLIMITED
+  CPU_PER_CALL UNLIMITED
+  CONNECT_TIME 30
+  IDLE_TIME 30
+  LOGICAL_READS_PER_SESSION UNLIMITED
+  LOGICAL_READS_PER_CALL UNLIMITED
+  COMPOSITE_LIMIT UNLIMITED
+  PRIVATE_SGA UNLIMITED
+  FAILED_LOGIN_ATTEMPTS 10
+  PASSWORD_LIFE_TIME UNLIMITED
+  PASSWORD_REUSE_TIME UNLIMITED
+  PASSWORD_REUSE_MAX UNLIMITED
+  PASSWORD_LOCK_TIME 1
+  PASSWORD_GRACE_TIME 7
+  PASSWORD_VERIFY_FUNCTION NULL;
 
-IMPORTANT NOTE:  You must set resource_limit=TRUE to automatically terminate Oracle connections.
+2. Assigned the profile to user.
 
+SQL> ALTER USER TEST profile app_user;
+User altered.
+
+3. Verify the profile of user.
+
+select profile from dba_users where username = 'TEST'
+
+PROFILE
+------------------------------
+APP_USER
+
+4. IMPORTANT NOTE:  You must set resource_limit=TRUE to automatically terminate Oracle connections.
+sho parameter resource_limit
 alter system set resource_limit=true scope=both;
+-------- set for 30 minutes
+5. ALTER PROFILE app_user LIMIT IDLE_TIME 30;
+6. ALTER PROFILE app_user LIMIT CONNECT_TIME 30;
 
---------- set for 30 minutes
+--------- Check the idle time and connect time value for a profile
+7. SELECT * FROM DBA_PROFILES WHERE PROFILE='app_user' AND RESOURCE_NAME IN ('IDLE_TIME','CONNECT_TIME');
+==================================================================================================================
 
-alter profile profile_test limit
-connect_time 30
-idle_time 30;
------------------
-ALTER PROFILE profile_test LIMIT IDLE_TIME 30;
+
+ALTER PROFILE profile_test LIMIT IDLE_TIME CONNECT TIME 30;
 ALTER PROFILE profile_test LIMIT IDLE_TIME UNLIMITED;
----------------
-select *from session_privs;
+
+****************************** Important tables
+select * from session_privs;
 select * from DBA_PROFILES;
 select * from dba_users;
 select * from user_resource_limits;
-----------------
+
+---------------- for monitoring session idle time or waiting time
 SELECT username, status, seconds_in_wait FROM v$session WHERE username = 'JAHED';
+
+
+
