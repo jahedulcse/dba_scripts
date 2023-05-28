@@ -1,0 +1,15 @@
+alter profile senior_claim_analyst limit
+connect_time 180000
+sessions_per_user 2
+idle_time 30;
+-----------------
+alter system set resource_limit=true scope=both;
+
+ALTER PROFILE DEFAULT LIMIT IDLE_TIME 60;
+ALTER PROFILE DEFAULT LIMIT IDLE_TIME UNLIMITED;
+---------------
+select *from session_privs;
+select * from DBA_PROFILES;
+select * from dba_users;
+select * from user_resource_limits;
+select * from dba_profiles where profile='DEFAULT' and resource_name in ('IDLE_TIME','CONNECT_TIME');
