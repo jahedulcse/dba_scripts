@@ -1,15 +1,25 @@
-alter profile senior_claim_analyst limit
-connect_time 180000
-sessions_per_user 2
-idle_time 30;
------------------
+############### CONNECT_TIME and IDLE_TIME in Oracle profile
+
+--------- Check the idle time and connect time value for a profile
+
+SELECT * FROM DBA_PROFILES WHERE PROFILE='DEFAULT' AND RESOURCE_NAME IN ('IDLE_TIME','CONNECT_TIME');
+
+IMPORTANT NOTE:  You must set resource_limit=TRUE to automatically terminate Oracle connections.
+
 alter system set resource_limit=true scope=both;
 
-ALTER PROFILE DEFAULT LIMIT IDLE_TIME 60;
-ALTER PROFILE DEFAULT LIMIT IDLE_TIME UNLIMITED;
+--------- set for 30 minutes
+
+alter profile profile_test limit
+connect_time 30
+idle_time 30;
+-----------------
+ALTER PROFILE profile_test LIMIT IDLE_TIME 30;
+ALTER PROFILE profile_test LIMIT IDLE_TIME UNLIMITED;
 ---------------
 select *from session_privs;
 select * from DBA_PROFILES;
 select * from dba_users;
 select * from user_resource_limits;
-select * from dba_profiles where profile='DEFAULT' and resource_name in ('IDLE_TIME','CONNECT_TIME');
+----------------
+SELECT username, status, seconds_in_wait FROM v$session WHERE username = 'JAHED';
