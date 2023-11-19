@@ -1,0 +1,15 @@
+==== http://raafat.tawasol.net/how-to-delete-archivelog-using-rman-in-oracle/
+
+sqlplus / as sysdba
+ARCHIVE LOG LIST;
+exit
+
+rman target / nocatalog
+
+RMAN>crosscheck archivelog all;
+RMAN>list archivelog all; 
+
+RMAN>delete archivelog all completed before 'SYSDATE-5'
+
+RMAN>delete archivelog until time ‘SYSDATE-10’;
+RMAN>delete noprompt archivelog until time ‘SYSDATE-10’; 
