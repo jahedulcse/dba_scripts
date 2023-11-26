@@ -9,7 +9,9 @@ rman target / nocatalog
 RMAN>crosscheck archivelog all;
 RMAN>list archivelog all; 
 
-RMAN>delete archivelog all completed before 'SYSDATE-5'
+RMAN>delete archivelog all completed before 'SYSDATE-1';
+RMAN>DELETE noprompt ARCHIVELOG ALL COMPLETED BEFORE 'SYSDATE-1';
+RMAN>DELETE EXPIRED ARCHIVELOG ALL;
 
 RMAN>delete archivelog until time ‘SYSDATE-10’;
 RMAN>delete noprompt archivelog until time ‘SYSDATE-10’; 
