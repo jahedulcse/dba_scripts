@@ -1,0 +1,31 @@
+su - oracle
+  288  vi /home/oracle/.bash_profile
+  289  su - oracle
+  290  ps -ef | grep pmon | grep -v grep
+  291  srvctl status instance -d portaldb -i portaldb1
+  292  su - grid
+  293  ps -ef | grep pmon | grep -v grep
+  294  . oraenv
+  295  srvctl status instance -d portaldb -i portaldb1
+  296  srvctl stop instance -d portaldb -i portaldb1
+  297  srvctl status instance -d portaldb -i portaldb1
+  srvctl status database -d portaldb
+  298  ps -ef | grep pmon | grep -v grep
+  299  crsctl check crs
+  300  crsctl stop crs
+  301  crsctl check crs
+  302  ps -ef | grep pmon | grep -v grep
+  303  reboot
+  304  ps -ef | grep pmon | grep -v grep
+  305  ps -ef | grep pmon | grep -v grep
+  306  ll /dev/oracleasm/disks/
+  307  crsctl check crs
+  308  . oraenv
+  309  crsctl check crs
+  310  crsctl start crs
+  311  ps -ef | grep pmon | grep -v grep
+  312  srvctl status instance -d portaldb -i portaldb1
+  313  srvctl start instance -d portaldb -i portaldb1
+  314  srvctl status instance -d portaldb -i portaldb1
+  315  ps -ef | grep pmon | grep -v grep
+  
