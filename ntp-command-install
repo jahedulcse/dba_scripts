@@ -1,2 +1,99 @@
 
 https://linuxhint.com/sync-time-ntp-server-linux/
+---------------
+
+yum install ntp
+vi /etc/ntp.conf
+systemctl start ntpd
+systemctl enable ntpd
+ntpq -p
+sudo ntpdate -u
+sudo ntpdate -u 10.240.3.24
+
+cat /etc/sysconfig/ntpd
+  175  ntpq -pn
+  176  cat /etc/sysconfig/ntpd
+  177  ntpq -p
+  178  date
+  179  cat /etc/sysconfig/ntpd
+  180  ps -ef|grep ntpd
+  181  timedatectl set-ntp true
+  182  timedatectl
+  183  ntpq -pn
+  184  timedatectl --help
+  185  timedatectl status
+  186  timedatectl timesync-status
+  187  timedatectl show-timesync
+  188  timedatectl ntp-servers
+  189  timedatectl
+  190  yum install timesyncd
+  191  yum sarch timesync
+  192  yum search timesy
+  193  ntpq -p
+  194  timedatectl set-ntp false
+  195  systemctl start ntpd
+  196  ntpd -p
+  197  ntpq -p
+  198  ntpq -pn
+  199  cat /etc/ntp.conf o
+  200  cat /etc/ntp.conf
+  201  cat /etc/ntp.conf |less
+  202  ls -l /var/lib/ntp/drift
+  203  date /var/lib/ntp/drift
+  204  cat /var/lib/ntp/drift
+  205  ntpq -pn
+  206  date
+  207  route -n
+  208  tcpdump -i eno6 ntp
+  209  tcpdump -i eno6 port 123
+  210  ntpq -pn
+  211  vi /etc/ntp.conf o
+  212  vi /etc/ntp.conf
+  213  date
+  214  systemctl start ntpd.service
+  215  ntpq -pn
+  216  vi /etc/ntp.conf
+  217  systemctl restart ntpd.service
+  218  ntpq -pn
+  219  ntpdate -u 10.243.67.141 >>> 10.240.3.24
+  220  ntpdate -u 10.243.67.141  10.240.3.24
+  221  ntpq -pn
+  222  cat /etc/sysconfig/ntpd
+  223  systemctl restart ntpd
+  224  systemctl enable ntpd
+  225  ntpq -pn
+  226  exit
+  227  ntpd -gq
+
+vi /etc/sysconfig/ntpd
+  232  systemctl restart ntpd.service
+  233  systemctl stop ntpd.service
+  234  vi /etc/sysconfig/ntpd
+  235  systemctl restart ntpd.service
+  236  vi /etc/sysconfig/ntpd
+  237  systemctl restart ntpd.service
+  238  vi /etc/ntp.conf
+  239  systemctl restart ntpd.service
+  240  ntpq -pn
+  241  vi /etc/sysconfig/ntpd
+  242  systemctl restart ntpd.service
+  243  vi /etc/sysconfig/ntpd
+  244  systemctl restart ntpd.service
+  245  ntpq -pn
+  246  systemctl status ntpd.service
+  247  ntpq -pn
+  248  ntpdate -q 10.240.3.24
+  249  vi /etc/ntp.conf
+  250  systemctl restart ntpd.service
+  251  ntpq -pn
+  252  vi /etc/ntp.conf
+  253  vi /etc/sysconfig/ntpd
+  254  telnet 10.240.3.24 123
+  255  yum install telnet
+  256  telnet 10.240.3.24 123
+  257  telnet 10.240.3.25 123
+  258  ntpq -pn
+  259  ntpq -p
+  260  ntpq -pn
+  261  exit
+  262  ntpq -pn
