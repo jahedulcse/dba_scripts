@@ -10,3 +10,15 @@ where vi.voter_nid = tv.voter_id_en;
 
 SELECT CONCAT('INSERT INTO sup_deactivated_eoi VALUES (', sd.fid, ', \'', sd.name, '\', \'', sd.NID, '\', \'', sd.PHONE, '\', \'', sd.UPAZILA_ID, '\', \'', sd.STATUS, '\', \'', sd.ZILA, '\', \'', sd.UPAZILA, '\', \'', sd.UNION_ID, '\', \'', sd.UNION, '\');')
 FROM sup_deactivated_eoi sd;
+
+----------
+
+SELECT CONCAT('INSERT INTO tbl_admins VALUES (', 
+    COALESCE(sd.ID, ''), 
+    ', \'', COALESCE(sd.FIRSTNAME, ''), '\', \'', COALESCE(sd.LASTNAME, ''), '\', \'', 
+    COALESCE(sd.OFFICE_NAME, ''), '\', \'', COALESCE(sd.USERNAME, ''), '\', \'', COALESCE(sd.EMAIL, ''), '\', \'', 
+    COALESCE(sd.MOBILE, ''), '\', \'', COALESCE(sd.PASSWORD, ''), '\', \'', COALESCE(sd.ROLE, ''), '\', \'', 
+    COALESCE(sd.UPAZILA_ID, ''), '\', \'', COALESCE(sd.STATUS, ''), '\', \'', COALESCE(sd.GMAIL, ''), '\', \'', 
+    COALESCE(sd.IP, ''), '\', \'', COALESCE(sd.SESSION_ID, ''), '\', \'', COALESCE(sd.CREATE_TIME, ''), '\', \'', 
+    COALESCE(sd.CREATED_BY, ''), '\', \'', COALESCE(sd.MODIFY_TIME, ''), '\', \'', COALESCE(sd.MODIFIED_BY, ''), '\');')
+FROM tbl_admins sd;
