@@ -1,0 +1,12 @@
+
+====== update script =============
+
+select concat('update t_other_benefits set voter_id = ',tv.id), concat('where id = ',vi.row_id), 
+	CONCAT('and benefit_type_id = ',concat(vi.Benefit_ID,';'))  
+from  t_voters tv, voter_imports vi
+where vi.voter_nid = tv.voter_id_en;
+
+========== Insert Script ============
+
+SELECT CONCAT('INSERT INTO sup_deactivated_eoi VALUES (', sd.fid, ', \'', sd.name, '\', \'', sd.NID, '\', \'', sd.PHONE, '\', \'', sd.UPAZILA_ID, '\', \'', sd.STATUS, '\', \'', sd.ZILA, '\', \'', sd.UPAZILA, '\', \'', sd.UNION_ID, '\', \'', sd.UNION, '\');')
+FROM sup_deactivated_eoi sd;
