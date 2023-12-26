@@ -22,3 +22,18 @@ SELECT CONCAT('INSERT INTO tbl_admins VALUES (',
     COALESCE(sd.IP, ''), '\', \'', COALESCE(sd.SESSION_ID, ''), '\', \'', COALESCE(sd.CREATE_TIME, ''), '\', \'', 
     COALESCE(sd.CREATED_BY, ''), '\', \'', COALESCE(sd.MODIFY_TIME, ''), '\', \'', COALESCE(sd.MODIFIED_BY, ''), '\');')
 FROM tbl_admins sd;
+
+
+SELECT CONCAT('INSERT INTO tbl_farmer VALUES (', 
+    COALESCE(sd.ID, ''), 
+    ', \'', COALESCE(sd.FARMER_NUMBER, ''), '\', \'', COALESCE(sd.PASSWORD, ''), '\', \'', 
+    COALESCE(sd.NID, ''), '\', \'', COALESCE(sd.NAME, ''), '\', \'', COALESCE(sd.NAME_EN, ''), '\', \'', 
+    COALESCE(sd.UPAZILA_ID, ''), '\', \'', COALESCE(sd.UNION_ID, ''), '\', \'', COALESCE(sd.PHONE, ''), '\', \'', 
+    COALESCE(sd.PHOTO, ''), '\', \'', COALESCE(sd.ROLE, ''), '\', \'', COALESCE(sd.MOTHER_NAME, ''), '\', \'', 
+    COALESCE(sd.FATHER_NAME, ''), '\', \'', COALESCE(sd.GENDER, ''), '\', \'', COALESCE(sd.DATE_OF_BIRTH, ''), '\', \'', 
+    COALESCE(sd.PERMANENT_ADDRESS, ''), '\', \'', COALESCE(sd.CURRENT_ADDRESS, ''), '\', \'', COALESCE(sd.AMON_LAND, ''), '\', \'',
+    COALESCE(sd.BORO_LAND, ''), '\', \'', COALESCE(sd.STATUS, ''), '\', \'', COALESCE(sd.LOGIN_HIT, ''), '\', \'', 
+    COALESCE(sd.LAST_HIT, ''), '\', \'', COALESCE(sd.CREATED_BY, ''), '\', \'', COALESCE(sd.CREATE_TIME, ''), '\', \'',
+    COALESCE(sd.MODIFIED_BY, ''), '\', \'', COALESCE(sd.MODIFY_TIME, ''), '\', \'', COALESCE(sd.COMMENT, ''), '\'
+    );')
+FROM tbl_farmer sd;
