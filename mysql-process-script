@@ -46,3 +46,12 @@ insert into farmertest.TBL_ADMINS
 select to_char(to_date(CREATE_TIME,'RRRR-MM-DD HH24:MI:SS'),'DD-MM-RRRR HH24:MI:SS') from TBL_ADMINS;
 
 select to_char(to_date(CREATE_TIME,'RRRR-MM-DD HH24:MI:SS'),'DD-MM-RRRR HH24:MI:SS') from TBL_ADMINS;
+
+======================
+
+select id, count(id) from tbl_farmer having count(id)>1 group by id order by id desc;
+----
+delete from tbl_farmer where id in (select id from tbl_farmer 
+            group by id having count(*) > 1)
+and rowid not in (select min(rowid) from tbl_farmer
+group by id having count(*) > 1);
