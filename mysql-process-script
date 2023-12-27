@@ -37,3 +37,12 @@ SELECT CONCAT('INSERT INTO tbl_farmer VALUES (',
     COALESCE(sd.MODIFIED_BY, ''), '\', \'', COALESCE(sd.MODIFY_TIME, ''), '\', \'', COALESCE(sd.COMMENT, ''), '\'
     );')
 FROM tbl_farmer sd;
+
+===================================================================
+ALTER SESSION SET NLS_DATE_FORMAT='DD-MM-RRRR HH24:MI:SS';
+
+insert into farmertest.TBL_ADMINS
+(CREATE_TIME)
+select to_char(to_date(CREATE_TIME,'RRRR-MM-DD HH24:MI:SS'),'DD-MON-RRRR HH:MI:SS') from TBL_ADMINS;
+
+select to_char(to_date(CREATE_TIME,'RRRR-MM-DD HH24:MI:SS'),'DD-MM-RRRR HH24:MI:SS') from TBL_ADMINS;
