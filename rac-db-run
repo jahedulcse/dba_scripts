@@ -28,4 +28,17 @@ su - oracle
   313  srvctl start instance -d portaldb -i portaldb1
   314  srvctl status instance -d portaldb -i portaldb1
   315  ps -ef | grep pmon | grep -v grep
-  
+
+*************************************
+*************** Start Rac databases ********
+======= in Rac1
+su - oracle
+srvctl status instance -d portaldb -i portaldb1
+srvctl start instance -d portaldb -i portaldb1
+sqlplus / as sysdba
+
+========= in Rac2
+su - oracle
+sqlplus / as sysdba
+startup;
+
