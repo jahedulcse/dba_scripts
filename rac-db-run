@@ -36,6 +36,10 @@ su - oracle
 srvctl status instance -d portaldb -i portaldb1
 srvctl start instance -d portaldb -i portaldb1
 sqlplus / as sysdba
+---
+crsctl check crs
+crsctl stop crs
+crsctl start crs
 
 ========= in Rac2
 su - oracle
