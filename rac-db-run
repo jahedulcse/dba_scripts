@@ -41,6 +41,30 @@ crsctl check crs
 crsctl stop crs
 crsctl start crs
 
+-------------------------------
+
+ping dgfood.gov.bd
+  902  ping pdbdc01
+  903  ping pdbdc01.dgfood.gov.bd
+  904  ping 10.240.3.24
+  905  ping pdbdc01-vip.dgfood.gov.bd
+  906  . oraenv
+  907  ps -ef | grep pmon | grep -v grep
+  908  status instance -d portaldb -i portaldb1
+  909  srvctl status instance -d portaldb -i portaldb1
+  910  ll /dev/oracleasm/disks/
+  911  crsctl check crs
+  912  srvctl start instance -d portaldb -i portaldb1
+  913  ps -ef | grep pmon | grep -v grep
+
+
+crsctl check cluster -all
+  135  crsctl status resource -t
+
+tnsping portaldb.dgfood.gov.bd
+
+srvctl status nodeapps -n dbnode1
+
 ========= in Rac2
 su - oracle
 sqlplus / as sysdba
