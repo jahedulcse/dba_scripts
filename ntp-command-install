@@ -1,4 +1,7 @@
+******** command for manually sync NTP time *******
+ntpdate -u 10.240.3.24
 
+******
 https://linuxhint.com/sync-time-ntp-server-linux/
 ---------------
 
