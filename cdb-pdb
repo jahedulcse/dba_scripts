@@ -1,11 +1,22 @@
+http://www.oracle-wiki.net/premium:startdocsminimultistartpdb
+
 $ ps -ef | grep pmon
 $ export ORACLE_SID=portaldb;
 $ echo $ORACLE_SID
 $ sqlplus / as sysdba
 
 SQL> SELECT name, pdb FROM   v$services ORDER BY name;
+SQL> select name, open_mode from v$pdbs;
+SQL> show pdbs
+
+SQL> alter pluggable database myplugdb3 open;
+SQL> alter pluggable database all open;
+SQL> alter pluggable database myplugdb3 close immediate;
+SQL> alter pluggable database all close immediate;
 
 $ lsnrctl service
+
+$ lsnrctl reload   <<< not need to execute here
 
 $ sqlplus / as sysdba
 SQL> SHOW CON_NAME
@@ -19,3 +30,10 @@ SQL> ALTER SESSION SET CONTAINER=cdb$root;
 SQL> SHOW CON_NAME
 SQL> ALTER SESSION SET CONTAINER=pdb1 SERVICE=my_new_service;
 
+---------------
+sqlplus '/ as sysdba'
+SQL> CREATE OR REPLACE TRIGGER pdb_startup AFTER STARTUP ON DATABASE
+SQL> BEGIN
+SQL> EXECUTE IMMEDIATE 'alter pluggable database all open';
+SQL> END pdb_startup;
+SQL> /
