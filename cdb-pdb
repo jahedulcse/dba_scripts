@@ -1,1 +1,21 @@
-test
+$ ps -ef | grep pmon
+$ export ORACLE_SID=portaldb;
+$ echo $ORACLE_SID
+$ sqlplus / as sysdba
+
+SQL> SELECT name, pdb FROM   v$services ORDER BY name;
+
+$ lsnrctl service
+
+$ sqlplus / as sysdba
+SQL> SHOW CON_NAME
+SQL> SHOW CON_ID
+
+### Switching Between Containers
+
+SQL> ALTER SESSION SET CONTAINER=pdb1;
+SQL> SHOW CON_NAME
+SQL> ALTER SESSION SET CONTAINER=cdb$root;
+SQL> SHOW CON_NAME
+SQL> ALTER SESSION SET CONTAINER=pdb1 SERVICE=my_new_service;
+
