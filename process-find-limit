@@ -1,0 +1,33 @@
+https://www.linkedin.com/pulse/how-increase-processes-initialization-parameter-ora-00020-jain
+https://dbsguru.com/increase-processes-sessions-transactions-parameter/
+
+************
+*********************
+select resource_name,current_utilization, limit_value 
+from v$resource_limit 
+where resource_name in ('sessions','processes','transactions') order by resource_name;
+***************************
+
+sql> show parameter sessions;
+
+sql> show parameter processes;
+
+sql> show parameter transactions;
+
+processes=x
+
+      sessions=x*1.1+5
+
+      transactions=sessions*1.1
+
+### These paramters can't be modified in memory. You have to modify the spfile only (scope=spfile) and bounce the instance.
+
+   sql> alter system set processes=500 scope=spfile;
+
+   sql> alter system set sessions=555 scope=spfile;
+
+   sql> alter system set transactions=610 scope=spfile;
+
+   sql> shutdown abort
+
+   sql> startup
