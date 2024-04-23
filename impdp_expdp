@@ -17,3 +17,10 @@ include=SCHEMA:"in\('OSMAN'\)"
 impdp system/system@policy full=y directory=DATA_PUMP_DIR_TEST dumpfile=full_policy-2022120621.dmp logfile=test_SB_POLICY.log
 include=SCHEMA:"in\('SB_POLICY'\)" segment_attributes:n
 ----ORA-14460: only one COMPRESS or NOCOMPRESS clause may be specified   ----> segment_attributes:n
+
+
+##### **************** for faster impdp use transform=disable_archive_logging:y
+
+C:\Users\DELL>impdp NAWAZ/NAWAZ@ORCL directory=IMPORT tables=NAWAZ transform=disable_archive_logging:y
+
+
