@@ -25,3 +25,14 @@ begin
   end loop;          
 end;
 /
+
+begin
+  for rec in (select INDEX_NAME 
+              from dba_indexes where TABLE_OWNER='FOODPROD'
+             )
+  loop
+    --execute immediate 'drop table '||rec.table_name;
+    execute 'alter index '||rac.INDEX_NAME || ' REBUILD TABLESPACE FOODTBS#DATA';
+  end loop;          
+end;
+/
