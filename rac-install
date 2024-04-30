@@ -1,0 +1,617 @@
+************
+https://serhatcelik.wordpress.com/2021/02/15/step-by-step-oracle-19c-rac-installation-on-oracle-linux-7-9/
+-------------
+https://www.collegesidekick.com/study-docs/697629
+
+https://www.youtube.com/watch?v=e6qCJYYXzZw
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+=================================================================
+*********************************************** Oracle RAC installation on Redhat ***********************
+
+--- disable selinux on node1 and node2
+
+more /etc/selinux/config
+
+--- STOP AND DISABLE FIREWALL & NETWORK MANAGER SERVICES ON NODE1 AND NODE2
+[root@node1 ~]# systemctl stop firewalld.service
+[root@node1 ~]# systemctl disable firewalld
+[root@node1 ~]# systemctl stop NetworkManager
+[root@node1 ~]#
+[root@node1 ~]# systemctl disable NetworkManager
+
+[root@node2 ~]# systemctl stop firewalld.service
+[root@node2 ~]#
+[root@node2 ~]# systemctl disable firewalld
+[root@node2 ~]# systemctl stop NetworkManager
+[root@node2 ~]#
+[root@node2 ~]# systemctl disable NetworkManage
+
+#### Repository Create 
+----------------------------
+cd /dvd/dvd
+
+cp media.repo /etc/yum.repos.d/
+vi /etc/yum.repos.d/media.repo
+
+[InstallMedia]
+name=Red Hat Enterprise Linux 7.9
+mediaid=1582647234.022611
+metadata_expire=-1
+gpgcheck=0
+cost=500
+
+enabled=1
+baseurl=file:///dvd/dvd
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+
+
+yum clean all
+yum repolist all
+
+---------------------------------
+
+#### Install necessary packages
+cd
+
+yum install -y compat-openssl10
+yum install -y ksh
+yum install -y libnsl
+yum install -y sysstat
+yum install -y xterm
+
+yum install -y kmod-oracleasm
+
+### Software and file store
+
+mkdir /soft
+
+--- Import necessary software and tools to /soft folder
+
+compat-libstdc++-33-3.2.3-72.el7.x86_64.rpm
+compat-libcap1-1.10-7.el7.x86_64.rpm
+oracleasmlib-2.0.12-1.el7.x86_64.rpm
+oracleasm-support-2.1.11-2.el7.x86_64.rpm
+oracle-database-preinstall-19c-1.0-1.el7.x86_64.rpm
+
+### Install necessary packages
+
+cd /soft
+ls -l
+
+rpm -i oracle-database-preinstall-19c-1.0-1.el7.x86_64.rpm
+yum install -y libaio-devel
+rpm -i compat-libstdc++-33-3.2.3-72.el7.x86_64.rpm
+rpm -i compat-libcap1-1.10-7.el7.x86_64.rpm
+rpm -i oracle-database-preinstall-19c-1.0-1.el7.x86_64.rpm
+
+cd /etc/security/limits.d/
+ls -l
+cat oracle-database-preinstall-19c.conf
+
+### Add below limits for Oracle and Grid User 
+
+vi /etc/security/limits.conf
+
+oracle   soft   nofile    1024
+oracle   hard   nofile    65536
+oracle   soft   nproc    16384
+oracle   hard   nproc    16384
+oracle   soft   stack    10240
+oracle   hard   stack    32768
+oracle   hard   memlock    134217728
+oracle   soft   memlock    134217728
+
+grid   soft   nofile    1024
+grid   hard   nofile    65536
+grid   soft   nproc    16384
+grid   hard   nproc    16384
+grid   soft   stack    10240
+grid   hard   stack    32768
+grid   hard   memlock    134217728
+grid   soft   memlock    134217728
+
+cd /soft/
+
+rpm -i oracleasmlib-2.0.12-1.el7.x86_64.rpm
+rpm -i oracleasm-support-2.1.11-2.el7.x86_64.rpm
+
+######### CREATE NEEDED USERS & GROUPS ON NODE1 AND NODE2
+
+[root@node1 ~]# groupadd -g 54333 asmdba
+[root@node1 ~]# groupadd -g 54334 asmoper
+[root@node1 ~]# groupadd -g 54335 asmadmin
+[root@node1 ~]# useradd -m -u 54341 -g oinstall -G dba,asmadmin,asmdba,asmoper -d /home/grid -s /bin/bash grid
+[root@node1 ~]# usermod -a -G asmdba oracle
+[root@node1 ~]# passwd oracle
+[root@node1 ~]# passwd grid
+
+[root@node2 ~]# groupadd -g 54333 asmdba
+[root@node2 ~]# groupadd -g 54334 asmoper
+[root@node2 ~]# groupadd -g 54335 asmadmin
+[root@node2 ~]# useradd -m -u 54341 -g oinstall -G dba,asmadmin,asmdba,asmoper -d /home/grid -s /bin/bash grid
+[root@node2 ~]# usermod -a -G asmdba oracle
+[root@node2 ~]# passwd oracle
+[root@node2 ~]# passwd grid
+
+
+CREATE AND GIVE NEEDED PERMISSIONS FOR DIRECTORIES ON NODE1 AND NODE2
+
+[root@node1 ~]# mkdir -p /u01/app/grid/19.3.0/gridhome_1
+[root@node1 ~]# mkdir -p /u01/app/grid/gridbase/
+[root@node1 ~]# mkdir -p /u01/app/oracle/database/19.3.0/dbhome_1
+[root@node1 ~]# chown -R oracle.oinstall /u01/
+[root@node1 ~]# chown -R grid.oinstall /u01/app/grid
+[root@node1 ~]# chmod -R 775 /u01/
+[root@node1 ~]#
+
+[root@node2 ~]# mkdir -p /u01/app/grid/19.3.0/gridhome_1
+[root@node2 ~]# mkdir -p /u01/app/grid/gridbase/
+[root@node2 ~]# mkdir -p /u01/app/oracle/database/19.3.0/dbhome_1
+[root@node2 ~]# chown -R oracle.oinstall /u01/
+[root@node2 ~]# chown -R grid.oinstall /u01/app/grid
+[root@node2 ~]# chmod -R 775 /u01/
+[root@node2 ~]#
+
+UPDATE ORACLE & GRID USERS PROFILE ON NODE1 AND NODE2
+
+[root@node1 ~]# vi /home/oracle/.bash_profile
+export TMP=/tmp
+export TMPDIR=$TMP
+export ORACLE_HOSTNAME=node1.serhatcelik.local
+export ORACLE_UNQNAME=portaldb
+export ORACLE_BASE=/u01/app/oracle/database/19.3.0
+export DB_HOME=$ORACLE_BASE/dbhome_1
+export ORACLE_HOME=$DB_HOME
+export ORACLE_SID=portaldb1
+export ORACLE_TERM=xterm
+export PATH=/usr/sbin:/usr/local/bin:$PATH
+export PATH=$ORACLE_HOME/bin:$PATH
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib
+export CLASSPATH=$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib
+
+[root@node1 ~]# vi /home/grid/.bash_profile
+export TMP=/tmp
+export TMPDIR=$TMP
+export ORACLE_HOSTNAME=node1.serhatcelik.local
+export ORACLE_BASE=/u01/app/grid/gridbase/
+export ORACLE_HOME=/u01/app/grid/19.3.0/gridhome_1
+export GRID_BASE=/u01/app/grid/gridbase/
+export GRID_HOME=/u01/app/grid/19.3.0/gridhome_1
+export ORACLE_SID=+ASM1
+export ORACLE_TERM=xterm
+export PATH=/usr/sbin:/usr/local/bin:$PATH
+export PATH=$ORACLE_HOME/bin:$PATH
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib
+export CLASSPATH=$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib
+
+[root@node2 ~]# vi /home/oracle/.bash_profile
+export TMP=/tmp
+export TMPDIR=$TMP
+export ORACLE_HOSTNAME=node2.serhatcelik.local
+export ORACLE_UNQNAME=portaldb
+export ORACLE_BASE=/u01/app/oracle/database/19.3.0
+export DB_HOME=$ORACLE_BASE/dbhome_1
+export ORACLE_HOME=$DB_HOME
+export ORACLE_SID=portaldb2
+export ORACLE_TERM=xterm
+export PATH=/usr/sbin:/usr/local/bin:$PATH
+export PATH=$ORACLE_HOME/bin:$PATH
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib
+export CLASSPATH=$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib
+
+[root@node2 ~]# vi /home/grid/.bash_profile
+export TMP=/tmp
+export TMPDIR=$TMP
+export ORACLE_HOSTNAME=node2.serhatcelik.local
+export ORACLE_BASE=/u01/app/grid/gridbase/
+export ORACLE_HOME=/u01/app/grid/19.3.0/gridhome_1
+export GRID_BASE=/u01/app/grid/gridbase/
+export GRID_HOME=/u01/app/grid/19.3.0/gridhome_1
+export ORACLE_SID=+ASM2
+export ORACLE_TERM=xterm
+export PATH=/usr/sbin:/usr/local/bin:$PATH
+export PATH=$ORACLE_HOME/bin:$PATH
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib
+export CLASSPATH=$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib
+
+#### UPDATE /etc/hosts FILES ON NODE1 AND NODE2
+
+[root@node1 ~]# vi /etc/hosts
+
+
+########### UPDATE KERNEL PARAMETER FILES ON NODE1 AND NODE2
+
+[root@node1 ~]# more /etc/sysctl.conf
+fs.file-max = 6815744
+kernel.sem = 250 32000 100 128
+kernel.shmmni = 4096
+kernel.shmall = 1073741824
+kernel.shmmax = 4398046511104
+net.core.rmem_default = 262144
+net.core.rmem_max = 4194304
+net.core.wmem_default = 262144
+net.core.wmem_max = 1048576
+fs.aio-max-nr = 1048576
+net.ipv4.ip_local_port_range = 9000 65500
+[root@node1 ~]#
+
+[root@node1 ~]# more /etc/security/limits.conf
+grid soft nofile 1024
+grid hard nofile 65536
+grid soft nproc 2047
+grid hard nproc 16384
+grid soft stack 10240
+grid hard stack 32768
+
+oracle soft nofile 1024
+oracle hard nofile 65536
+oracle soft nproc 2047
+oracle hard nproc 16384
+oracle soft stack 10240
+oracle hard stack 32768
+[root@node1 ~]#
+
+[root@node2 ~]# more /etc/sysctl.conf
+fs.file-max = 6815744
+kernel.sem = 250 32000 100 128
+kernel.shmmni = 4096
+kernel.shmall = 1073741824
+kernel.shmmax = 4398046511104
+net.core.rmem_default = 262144
+net.core.rmem_max = 4194304
+net.core.wmem_default = 262144
+net.core.wmem_max = 1048576
+fs.aio-max-nr = 1048576
+net.ipv4.ip_local_port_range = 9000 65500
+[root@node2 ~]#
+
+[root@node2 ~]# more /etc/security/limits.conf
+grid soft nofile 1024
+grid hard nofile 65536
+grid soft nproc 2047
+grid hard nproc 16384
+grid soft stack 10240
+grid hard stack 32768
+
+oracle soft nofile 1024
+oracle hard nofile 65536
+oracle soft nproc 2047
+oracle hard nproc 16384
+oracle soft stack 10240
+oracle hard stack 32768
+[root@node1 ~]#
+
+####### PREPARING AND SETUP OF GRID ENVIRONMENT
+
+We need to shared disc for RAC installation. Firstly, I have created 100GB test volume on my Dell Storage. Secondly, Server Cluster is created consists of Node1 and Node2. Lastly, test volume is mapped to Server Cluster using ISCSI. You should get help from your Linux System Admin / Storage Admin. I did all operations myself because storage and linux servers are managed by us 🙂
+
+CHECK DISKS ON NODE1 AND NODE2
+
+[root@node1 ~]# fdisk -l
+
+[root@node2 ~]# fdisk -l
+
+-------------------
+!!! APPLY BELOW STEPS ONLY ON NODE1 !!! NO OPERATION MUST BE DONE ON NODE2 !!!
+
+!!! DISCS IN THE DISC GROUP WE WILL CREATE FOR ASM SHOULD BE THE SAME SIZE !!!
+
+!!! FURTHER, OUR DISCS MUST BE UNFORMATTED AND UNUSED !!!
+
+
+DISC PARTION PROCESS IS DONE ONLY NODE1
+
+How many discs will be used, the following operations are done for all discs. I did it once as I only gave one disk for testing purposes.
+
+[root@node1 ~]# gdisk /dev/mapper/3600a098038314841515d55584644612d
+gdisk /dev/mapper/3600a098038314841515d555846446141
+gdisk /dev/mapper/3600a098038314841515d555846446143
+gdisk /dev/mapper/3600a098038314841515d555846446142
+gdisk /dev/mapper/3600a098038314841515d555846446144
+
+WE ARE RESTARTING NODE1 AND NODE2 SERVERS. IN THE NEXT STEP, WE WILL PREPARE OUR DISCS FOR ASM.
+
+UPDATE ORACLEASM DRIVER ON NODE1 AND NODE2
+
+[root@node1 ~]# oracleasm update-driver
+
+[root@node2 ~]# oracleasm update-driver
+
+####### ORACLEASM CONFIGURATION ON NODE1 AND NODE2
+
+[root@node1 ~]# oracleasm configure -I
+[root@node2 ~]# oracleasm configure -I
+
+{{ response}}
+Default user to own the driver interface []: grid
+Default group to own the driver interface []: asmadmin
+Start Oracle ASM library driver on boot (y/n) [n]: y
+Scan for Oracle ASM disks on boot (y/n) [y]: y
+
+OUR DISCS ARE PREPARED IMMEDIATELY. WE WILL MAKE KERNEL ACTIVE AND SEALING WITH ORACLEASM INIT
+
+ACTIVATE KERNEL ON NODE1 AND NODE2
+
+[root@node1 ~]# oracleasm init
+
+root@node2 ~]# oracleasm init
+
+!!! WE WILL STAMP THE DISCS. WE DO THIS OPERATION ONLY ON NODE1 !!!
+
+How many discs are given, the following operations are done for all discs. I did it once as I only gave one disk for testing purposes.
+
+[root@node1 ~]# oracleasm createdisk data1 /dev/mapper/3600a098038314841515d55584644612d1
+oracleasm createdisk reco1 /dev/mapper/3600a098038314841515d55584644612d2
+
+
+oracleasm createdisk data2 /dev/mapper/3600a098038314841515d555846446141p1
+oracleasm createdisk reco2 /dev/mapper/3600a098038314841515d555846446141p2
+
+
+oracleasm createdisk data3 /dev/mapper/3600a098038314841515d555846446143p1
+oracleasm createdisk reco3 /dev/mapper/3600a098038314841515d555846446143p2
+
+oracleasm createdisk data4 /dev/mapper/3600a098038314841515d555846446142p1
+oracleasm createdisk reco4 /dev/mapper/3600a098038314841515d555846446142p2
+
+
+oracleasm createdisk data5 /dev/mapper/3600a098038314841515d555846446144p1
+oracleasm createdisk reco5 /dev/mapper/3600a098038314841515d555846446144p2
+
+
+###### CHECK ASM DISCS
+
+[root@node1 ~]# ll /dev/oracleasm/disks/
+
+WE RUN THE FOLLOWING COMMAND IN ORDER TO SEE THE OUR TRANSACTION ON NODE2
+
+[root@node2 ~]# oracleasm scandisks
+[root@node2 ~]# oracleasm listdisks
+
+
+OUR DISCS ARE READY. NOW WE CAN START SETUP. FIRST, WE WILL INSTALL GRID
+
+ORACLE DATABASE 19C GRID INFRASTRUCTURE (19.3) FOR LINUX X86-64 IS DOWNLOADED AND UPLOADED TO NODE1 SERVER
+
+[root@node1 ~]# cd /u01/app/grid/19.3.0/gridhome_1
+[root@node1 gridhome_1]#
+
+[root@node1 gridhome_1]# ls -lrt
+total 2821476
+-rwxr–r– 1 root root 2889184573 Feb 14 00:13 LINUX.X64_193000_grid_home.zip
+[root@node1 gridhome_1]#
+
+[root@node1 gridhome_1]# chown grid:oinstall LINUX.X64_193000_grid_home.zip
+[root@node1 gridhome_1]#
+
+[root@node1 gridhome_1]# su – grid
+[grid@node1 ~]$
+[grid@node1 ~]$ cd /u01/app/grid/19.3.0/gridhome_1
+[grid@node1 gridhome_1]$
+[grid@node1 gridhome_1]$ unzip LINUX.X64_193000_grid_home.zip
+[grid@node1 gridhome_1]$
+
+############# As root
+
+sudo su - root
+
+cd /u01/app/grid/19.3.0/gridhome_1/cv/rpm
+
+scp cvuqdisk-1.0.10-1.rpm dgfpdbdc02:/tmp
+
+CVUQDISK_GRP=oinstall; export CVUQDISK_GRP
+rpm -i cvuqdisk-1.0.10-1.rpm
+
+ssh dgfpdbdc02
+
+cd /tmp
+
+CVUQDISK_GRP=oinstall; export CVUQDISK_GRP
+rpm -i cvuqdisk-1.0.10-1.rpm
+
+
+########## ORACLE AND GRID USERS ARE ADDED TO VISUDO
+
+[root@node1 ~]# visudo
+oracle ALL=(ALL) ALL
+oracle ALL=NOPASSWD: ALL
+grid ALL=(ALL) ALL
+grid ALL=NOPASSWD: ALL
+
+WE HAVE COME TO THE MOST CRITICAL POINT. WE WILL START THE GRID SETUP.
+
+THE MOST CONSIDERED SUBJECT HERE IS THE APPLICATION WE USE FOR SSH. I WAS USING THE ZOC APP AND THE SETUP SCREEN WAS NOT COMING DESPITE DISPLAY SETTINGS WERE DONE.
+
+USING MOBAXTERM APPLICATION AS THE SOLUTION, I HAVE GIVEN THE FOLLOWING COMMANDS AND THE SETUP SCREEN WAS STARTED. THERE IS ANOTHER IMPORTANT POINT, YOU MUST PROVIDE THE IPS OF THE WINDOWS MACHINE YOU STARTED THE INSTALLATION.
+
+[root@node1 ~]# su – grid
+[grid@node1 ~]$
+[grid@node1 ~]$ cd $GRID_HOME
+[grid@node1 gridhome_1]$
+[grid@node1 gridhome_1]$ sh gridSetup.sh
+[grid@node1 gridhome_1]$
+[grid@node1 gridhome_1]$ export DISPLAY=10.6.176.54:0.0
+[grid@node1 gridhome_1]$
+[grid@node1 gridhome_1]$ sh gridSetup.sh
+Launching Oracle Grid Infrastructure Setup Wizard…
+
+**********
+cluster name: dgfdcrac-cluster
+
+/dev/oracleasm/listdisks*
+
+sys: DgfDr$24#321
+
+ps -ef | grep pmon
+ps -ef | grep d.bin
+
+******************
+
+su - grid
+
+cd $GRID_HOME/bin
+
+crsctl check crs
+crsctl check cluster -all
+
+crsctl stat res -t
+
+cd $GRID_HOME
+
+##### Create ASM disks
+
+asmca
+
+-- or by command to create ASM disks
+
+sqlplus / as sysasm
+
+CREATE DISKGROUP ASMDATA1 EXTERNAL REDUNDANCY DISK 
+'/dev/oracleasm/disks/ASMDATA1';
+
+SELECT STATE, NAME FROM V$ASM_DISKGROUP;
+
+ALTER DISKGROUP ASMDATA1 MOUNT;
+
+COL name FOR A10;
+COL compatibility FOR A15;
+
+SELECT name, compatibility FROM v$asm_diskgroup;
+
+ALTER DISKGROUP ASMDATA1 SET ATTRIBUTE 'compatible.asm' = '19.0';
+
+
+--- asmcal configuration same as in standby site
+
+
+
+
+vi /etc/oratab  <<< Entry in each node
+
++ASM1:/u01/app/grid/19.3.0/gridhome_1/:Y
+
+
+
+######### Step By Step Oracle 19C RAC Installation on Oracle Linux 7.9 Part-3 DATABASE
+
+
+3. INSTALL ORACLE DATABASE 19C CDB & PDB
+
+3.1. INSTALLATION OF ORACLE DATABASE 19C SOFTWARE
+
+ORACLE DATABASE 19C (19.3) FOR LINUX X86-64 IS DOWNLOADED AND UPLOADED TO NODE1 SERVER
+
+[root@node1 ~]# su – oracle
+[oracle@node1 ~]$
+[oracle@node1 ~]$ cd $ORACLE_HOME/
+[oracle@node1 dbhome_1]$
+[oracle@node1 dbhome_1]$ ls -lrt
+-rwxr–r– 1 root root 3059705302 Feb 20 11:12 LINUX.X64_193000_db_home.zip
+[oracle@node1 dbhome_1]$
+[oracle@node1 dbhome_1]$ unzip LINUX.X64_193000_db_home.zip
+[oracle@node1 dbhome_1]$
+
+
+------------
+
+WE HAVE COME TO THE MOST CRITICAL POINT. WE WILL START THE SETUP.
+
+THE MOST CONSIDERED SUBJECT HERE IS THE APPLICATION WE USE FOR SSH. I WAS USING THE ZOC APP AND THE SETUP SCREEN WAS NOT COMING DESPITE DISPLAY SETTINGS WERE DONE.
+
+USING MOBAXTERM APPLICATION AS THE SOLUTION, I HAVE GIVEN THE FOLLOWING COMMANDS AND THE SETUP SCREEN WAS STARTED. THERE IS ANOTHER IMPORTANT POINT, YOU MUST PROVIDE THE IP OF THE WINDOWS MACHINE YOU STARTED THE INSTALLATION.
+
+I WILL CONTINUE THE NEXT STEPS WITH THE SCREENSHOTS
+
+su - oracle
+
+cd $ORACLE_HOME
+
+./runInstaller
+
+--- to check sqlplus
+
+sqlplus -v
+
+
+reco size: 200G
+SGA size: 218G
+pga size: 195G
+
+tail -100f /u01/app/oracle/database/19.3.0/cfgtoollogs/dbca/portaldb/trace.log_2024-04-03_08-00-43PM
+
+ps -ef |grep pmon
+
+crsctl stat res -t
+crsctl check cluster -all
+
+srvctl status database -d portaldb
+srvctl status database -d portaldb -v
+
+srvctl config scan
+srvctl config scan | grep VIP
+srvctl config scan | grep VIP | grep IPv4
+
+alter session set NLS_DATE_FORMAT='HH24:MI:SS';
+
+select distinct instance_name,status,name,open_mode,host_name,startup_time from gv$instance,gv$database;
+
+
+cat /$ORACLE_HOME/network/admin/tnsnames.ora
+
+
+TO DO CONNECT WITH TOAD FOLLOW BELOW STEPS
+
+If your oracle client version is lower than 19c, you will take below “ORA-28040: No matching authentication protocol” error.
+
+n order to get rid of “ORA-28040: No matching authentication protocol” error follow below steps.
+
+Enter below entries to $ORACLE_HOME/network/admin/network/admin/sqlnet.ora file on Node1 and Node2. If you don’t have sqlnet.ora file, create it.
+
+[root@node1 ~]# su – oracle
+Last login: Sun Feb 21 11:23:15 +03 2021 on pts/5
+[oracle@node1 ~]$
+[oracle@node1 ~]$ cd $ORACLE_HOME/
+[oracle@node1 dbhome_1]$
+[oracle@node1 dbhome_1]$ more network/admin/sqlnet.ora
+SQLNET.ALLOWED_LOGON_VERSION_SERVER=8
+SQLNET.ALLOWED_LOGON_VERSION_CLIENT=8
+[oracle@node1 dbhome_1]$
+
+[root@node2 ~]# su – oracle
+Last login: Sun Feb 21 11:08:57 +03 2021
+[oracle@node2 ~]$
+[oracle@node2 ~]$ cd $ORACLE_HOME/
+[oracle@node2 dbhome_1]$
+[oracle@node2 dbhome_1]$ more network/admin/sqlnet.ora
+SQLNET.ALLOWED_LOGON_VERSION_SERVER=8
+SQLNET.ALLOWED_LOGON_VERSION_CLIENT=8
+[oracle@node2 dbhome_1]$
+
+Restart Database
+
+[root@node1 ~]# su – oracle
+Last login: Sun Feb 21 10:38:53 +03 2021 on pts/0
+[oracle@node1 ~]$
+[oracle@node1 ~]$ ps -ef | grep pmon | grep -v grep
+oracle 9357 1 0 Feb20 ? 00:00:04 ora_pmon_CDBTEST1
+grid 28466 1 0 Feb15 ? 00:00:37 asm_pmon_+ASM1
+[oracle@node1 ~]$
+[oracle@node1 ~]$ srvctl status database -d CDBTEST
+Instance CDBTEST1 is running on node node1
+Instance CDBTEST2 is running on node node2
+[oracle@node1 ~]$
+[oracle@node1 ~]$ srvctl stop database -d CDBTEST
+[oracle@node1 ~]$
+[oracle@node1 ~]$ srvctl status database -d CDBTEST
+Instance CDBTEST1 is not running on node node1
+Instance CDBTEST2 is not running on node node2
+[oracle@node1 ~]$
+[oracle@node1 ~]$ srvctl start database -d CDBTEST
+[oracle@node1 ~]$
+[oracle@node1 ~]$ srvctl status database -d CDBTEST
+Instance CDBTEST1 is running on node node1
+Instance CDBTEST2 is running on node node2
+[oracle@node1 ~]$
+
+Test your toad connection again.
