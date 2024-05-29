@@ -1,0 +1,99 @@
+-- Connect as SYSDBA
+SQL> CONNECT SYS AS SYSDBA;
+
+-- Enable Unified Auditing
+SQL> ALTER SYSTEM SET audit_trail=DB SCOPE=SPFILE;
+SQL> SHUTDOWN IMMEDIATE;
+SQL> STARTUP;
+
+SQL> CONNECT SYS AS SYSDBA;
+
+-- Create an audit policy
+SQL> CREATE AUDIT POLICY update_delete_policy
+     ACTIONS UPDATE, DELETE
+     ON ALL_TABLES;
+
+-- Enable the audit policy
+SQL> AUDIT POLICY update_delete_policy;
+
+SQL> select * FROM unified_audit_trail
+
+
+-- Connect as SYSDBA
+SQL> CONNECT SYS AS SYSDBA;
+
+-- Connect as the table owner or a user with the appropriate privileges
+SQL> CONNECT your_username/your_password;
+
+-- Create an FGA policy to audit UPDATE and DELETE operations
+BEGIN
+  DBMS_FGA.ADD_POLICY(
+    object_schema   => 'FSMMS_DEV',
+    object_name     => 'T_FLOUR_MILLERS_OLD',
+    policy_name     => 'update_delete_policy',
+    audit_condition => NULL,
+    audit_column    => NULL,
+    handler_schema  => NULL,
+    handler_module  => NULL,
+    enable          => TRUE,
+    statement_types => 'UPDATE,DELETE',
+    audit_trail     => DBMS_FGA.DB + DBMS_FGA.EXTENDED
+  );
+END;
+/
+
+SQL> SELECT * FROM DBA_FGA_AUDIT_TRAIL WHERE OBJECT_SCHEMA = 'FSMMS_DEV' AND OBJECT_NAME = 'T_FLOUR_MILLERS_OLD';
+
+
+begin
+DBMS_FGA.DROP_POLICY('FSMMS_DEV', 'T_FLOUR_MILLERS_OLD', 'UPDATE_DELETE_POLICY');
+end;
+
+delete from DBA_FGA_AUDIT_TRAIL;
+
+SQL> NOAUDIT policy UPDATE_DELETE_POLICY;
+
+SQL> drop audit policy UPDATE_DELETE_POLICY;
+
+
+SYS.FGA_LOG$
+
+
+****************************************************************************************
+################################################################################
+********************************************
+
+CREATE OR REPLACE FORCE VIEW SYS.V#AUDIT_LOG
+as
+   SELECT DB_USER,
+          OS_USER,
+          USERHOST,
+          SYS_CONTEXT ('USERENV', 'IP_ADDRESS') Host_IP,
+          OBJECT_NAME,
+          SQL_TEXT,
+          SQL_BIND,
+          STATEMENT_TYPE,
+          TIMESTAMP
+     FROM DBA_FGA_AUDIT_TRAIL;
+
+***********************************************************************************************************************************
+
+BEGIN
+  FOR rec IN (SELECT table_name FROM all_tables WHERE owner = 'FSMMS_DEV') LOOP
+    EXECUTE IMMEDIATE 'BEGIN
+      DBMS_FGA.ADD_POLICY(
+        object_schema   => ''FSMMS_DEV'',
+        object_name     => ''' || rec.table_name || ''',
+        policy_name     => ''updpol_' || rec.table_name || ''',
+        audit_condition => NULL,
+        audit_column    => NULL,
+        handler_schema  => NULL,
+        handler_module  => NULL,
+        enable          => TRUE,
+        statement_types => ''UPDATE,DELETE'',
+        audit_trail     => DBMS_FGA.DB + DBMS_FGA.EXTENDED
+      );
+    END;';
+  END LOOP;
+END;
+/
