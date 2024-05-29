@@ -97,3 +97,42 @@ BEGIN
   END LOOP;
 END;
 /
+
+---------------- If policy already exist
+
+DECLARE
+  v_count NUMBER;
+BEGIN
+  FOR rec IN (SELECT table_name FROM all_tables WHERE owner = 'FSMMS_DEV') LOOP
+    -- Check if the policy already exists
+    BEGIN
+      SELECT COUNT(*) INTO v_count
+      FROM dba_audit_policies
+      WHERE object_schema = 'FSMMS_DEV'
+        AND object_name = rec.table_name
+        AND policy_name = 'updpol_' || rec.table_name;
+        
+      -- If the policy does not exist, add it
+      IF v_count = 0 THEN
+        DBMS_FGA.ADD_POLICY(
+          object_schema   => 'FSMMS_DEV',
+          object_name     => rec.table_name,
+          policy_name     => 'updpol_' || rec.table_name,
+          audit_condition => NULL,
+          audit_column    => NULL,
+          handler_schema  => NULL,
+          handler_module  => NULL,
+          enable          => TRUE,
+          statement_types => 'UPDATE,DELETE',
+          audit_trail     => DBMS_FGA.DB + DBMS_FGA.EXTENDED
+        );
+      END IF;
+    EXCEPTION
+      WHEN OTHERS THEN
+        -- Handle exception if policy already exists or any other issue
+        DBMS_OUTPUT.PUT_LINE('Error occurred for table ' || rec.table_name || ': ' || SQLERRM);
+    END;
+  END LOOP;
+END;
+/
+
