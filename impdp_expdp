@@ -21,6 +21,6 @@ include=SCHEMA:"in\('SB_POLICY'\)" segment_attributes:n
 
 ##### **************** for faster impdp use transform=disable_archive_logging:y
 
-C:\Users\DELL>impdp NAWAZ/NAWAZ@ORCL directory=IMPORT tables=NAWAZ transform=disable_archive_logging:y
+C:\Users\DELL> impdp NAWAZ/NAWAZ@ORCL directory=IMPORT tables=NAWAZ transform=disable_archive_logging:y
 
 
