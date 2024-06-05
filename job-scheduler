@@ -18,7 +18,7 @@ END;
 
 BEGIN
     DBMS_SCHEDULER.create_job (
-        job_name        => 'job_schedule_job_OMS_DISTRIBUTION_SCHEDULES',
+        job_name        => 'job_schedule_OMS_DISTRIBUTION_SCHEDULES',
         job_type        => 'PLSQL_BLOCK',
         job_action      => 'BEGIN pr_job_OMS_DISTRIBUTION_SCHEDULES; END;',
         start_date      => SYSTIMESTAMP,
