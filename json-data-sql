@@ -1,0 +1,113 @@
+
+CREATE VIEW V_MILLER_LICENSES AS
+SELECT
+	tmlr.id miller_id,
+	tlpi.id fgl_li_per_id,
+	tmlr.fgl_id,
+	tlpi.applicantname application_name,
+	tlpi.fathername father,
+	tlpi.mothername mother,
+	tlpi.mobile_no mobile,
+	present_div.bn_name present_division,
+	present_dis.BN_NAME present_district,
+	present_upa.bn_name present_upazila,
+	present_union.bn_name present_union,
+	tfur.VILLAGE present_village,
+	TFUR.ZIPCODE present_postcode,
+	TFUR.WARD present_ward,
+	tlpi.national_id nidv3,
+	business_div.bn_name business_division,
+	BUSINESS_DIS.BN_NAME business_district,
+	business_upa.bn_name business_upazilla,
+	BUSINESS_UNION.BN_NAME business_union,
+	tfur.businessvillage business_village,
+	tfur.businessward business_ward,
+	tfur.businesszipcode business_postcode,
+	tfur.businessnamebn business,
+	tmlr.reg_type,
+	tmlr.mill_process,
+	tmlr.existinglicensenumber exist_license_no,
+	tmlr.miller_license_number,
+	tmlr.dcf_approval_time dcf_approved_at,
+	tmlr.land_amount,
+	tmlr.mouza,
+	tmlr.khotian,
+	tmlr.dag_no,
+	TMLR.LICNS_EXPIRY_DATE license_expired_at,
+	TLD."PATH" profile_photo,
+	JSON_ARRAYAGG(
+	        JSON_OBJECT(
+	            'MOUZA' VALUE TSD.MOUZA,
+	            'KHATIYN' VALUE TSD.KHATIYN,
+	            'DAG_NO' VALUE TSD.DAG_NO,
+	            'UPAZILLA' VALUE STORE_UPA.BN_NAME,
+	            'LNGTH' VALUE TSD.DICS_LNGTH,
+	            'WIDTH' VALUE TSD.DICS_WIDTH,
+	            'HIGHT' VALUE TSD.DICS_HIGHT,
+	            'CPACTY' VALUE TSD.DICS_CPACTY
+	        )
+    ) AS store_details
+FROM
+	t_miller_licns_regs tmlr
+JOIN t_fgl_user_regs tfur ON
+	tmlr.fgl_id = tfur.id
+JOIN T_LICNS_DOCS tld ON
+	tfur.ID = TO_NUMBER(tld.REG_NO)
+	AND TLD.DOCTYPE = '1'
+JOIN t_licns_personal_info tlpi ON
+	tlpi.id = tfur.parent_id
+JOIN T_STORE_DTLS tsd ON
+	TFUR.ID = TSD.REG_NO
+LEFT JOIN t_divisions present_div ON
+	present_div.id = tfur.DIVISION
+LEFT JOIN t_divisions business_div ON
+	business_div.id = tfur.BUSINESSDIVISION
+LEFT JOIN T_DISTRICTS present_dis ON
+	present_dis.id = tfur.DISTRICT
+LEFT JOIN t_divisions business_dis ON
+	business_dis.id = tfur.BUSINESSDISTRICT
+LEFT JOIN T_UPAZILA present_upa ON
+	present_upa.id = tfur.UPZILLA
+LEFT JOIN T_UPAZILA business_upa ON
+	business_upa.id = tfur.BUSINESSUPZILLA
+LEFT JOIN T_UPAZILA store_upa ON
+	store_upa.id = TSD.UPZILLA
+LEFT JOIN T_UNIONS present_union ON
+	present_union.id = tfur.UNIONNAME
+LEFT JOIN T_UNIONS business_union ON
+	business_union.id = tfur.BUSINESSUNIONNAME
+GROUP BY
+	tmlr.id,
+	tlpi.id,
+	tmlr.fgl_id,
+	tlpi.applicantname,
+	tlpi.fathername,
+	tlpi.mothername,
+	tlpi.mobile_no,
+	present_div.bn_name,
+	present_dis.BN_NAME,
+	present_upa.bn_name,
+	present_union.bn_name,
+	tfur.VILLAGE,
+	TFUR.ZIPCODE,
+	TFUR.WARD,
+	tlpi.national_id,
+	business_div.bn_name,
+	BUSINESS_DIS.BN_NAME,
+	business_upa.bn_name,
+	BUSINESS_UNION.BN_NAME,
+	tfur.businessvillage,
+	tfur.businessward,
+	tfur.businesszipcode,
+	tfur.businessnamebn,
+	tmlr.reg_type,
+	tmlr.mill_process,
+	tmlr.existinglicensenumber,
+	tmlr.miller_license_number,
+	tmlr.dcf_approval_time,
+	tmlr.land_amount,
+	tmlr.mouza,
+	tmlr.khotian,
+	tmlr.dag_no,
+	TMLR.LICNS_EXPIRY_DATE,
+	TLD."PATH";
