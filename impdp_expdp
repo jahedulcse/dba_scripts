@@ -24,3 +24,13 @@ include=SCHEMA:"in\('SB_POLICY'\)" segment_attributes:n
 C:\Users\DELL> impdp NAWAZ/NAWAZ@ORCL directory=IMPORT tables=NAWAZ transform=disable_archive_logging:y
 
 
+######## *************** expdp/ impdp as sys
+
+expdp \"sys/vali2511 as sysdba\" DIRECTORY=oracle_pump DUMPFILE=$dir_export-clidata-full.dmp LOGFILE=$dir_export-clidata-full.log FULL=YES
+
+alter system set job_queue_processes=0
+
+create or replace directory ORACLE_PUMP as '/u02/clidata';
+
+impdp \"sys/password@clidb as sysdba\" full=Y directory=oracle_pump DUMPFILE=clidata-full.DMP logfile=clidata-full.log
+
