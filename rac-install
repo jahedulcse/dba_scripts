@@ -437,7 +437,7 @@ total 2821476
 [grid@node1 ~]$
 [grid@node1 ~]$ cd /u01/app/grid/19.3.0/gridhome_1
 [grid@node1 gridhome_1]$
-[grid@node1 gridhome_1]$ unzip LINUX.X64_193000_grid_home.zip
+[grid@node1 gridhome_1]$ unzip -qo LINUX.X64_193000_grid_home.zip
 [grid@node1 gridhome_1]$
 
 ############# As root
