@@ -31,7 +31,7 @@ more /etc/selinux/config
 [root@node2 ~]#
 [root@node2 ~]# systemctl disable NetworkManager
 
-#### Repository Create 
+#### Localt Repository Create 
 ----------------------------
 cd /dvd/dvd
 
