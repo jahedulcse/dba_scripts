@@ -309,6 +309,37 @@ DISC PARTION PROCESS IS DONE ONLY NODE1
 How many discs will be used, the following operations are done for all discs. I did it once as I only gave one disk for testing purposes.
 
 [root@node1 ~]# gdisk /dev/mapper/3600a098038314841515d55584644612d
+-----------
+Command (? for help): n
+Partition number (1-128, default 1): 2
+First sector (34-2147483614, default = 2048) or {+-}size{KMGTP}: 800G
+Last sector (1677721600-2147483614, default = 2147483614) or {+-}size{KMGTP}:
+Current type is 'Linux filesystem'
+Hex code or GUID (L to show codes, Enter = 8300):
+Changed type of partition to 'Linux filesystem'
+
+Command (? for help): w
+
+Final checks complete. About to write GPT data. THIS WILL OVERWRITE EXISTING
+PARTITIONS!!
+
+Do you want to proceed? (Y/N): Y
+
+Command (? for help): n
+Partition number (1-128, default 1):
+First sector (34-1677721599, default = 2048) or {+-}size{KMGTP}:
+Last sector (2048-1677721599, default = 1677721599) or {+-}size{KMGTP}:
+Current type is 'Linux filesystem'
+Hex code or GUID (L to show codes, Enter = 8300):
+Changed type of partition to 'Linux filesystem'
+
+Command (? for help): w
+
+Final checks complete. About to write GPT data. THIS WILL OVERWRITE EXISTING
+PARTITIONS!!
+
+Do you want to proceed? (Y/N): Y
+------------
 gdisk /dev/mapper/3600a098038314841515d555846446141
 gdisk /dev/mapper/3600a098038314841515d555846446143
 gdisk /dev/mapper/3600a098038314841515d555846446142
