@@ -388,6 +388,7 @@ root@node2 ~]# oracleasm init
 
 How many discs are given, the following operations are done for all discs. I did it once as I only gave one disk for testing purposes.
 
+---- If error occur >>> restart both servers
 [root@node1 ~]# oracleasm createdisk data1 /dev/mapper/3600a098038314841515d55584644612d1
 oracleasm createdisk reco1 /dev/mapper/3600a098038314841515d55584644612d2
 
