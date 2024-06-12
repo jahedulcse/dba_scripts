@@ -369,6 +369,13 @@ Default group to own the driver interface []: asmadmin
 Start Oracle ASM library driver on boot (y/n) [n]: y
 Scan for Oracle ASM disks on boot (y/n) [y]: y
 
+Device order to scan for ASM disks []:
+Devices to exclude from scanning []:
+Directories to scan []:
+Use device logical block size for ASM (y/n) [n]: y
+Writing Oracle ASM library driver configuration: done
+
+
 OUR DISCS ARE PREPARED IMMEDIATELY. WE WILL MAKE KERNEL ACTIVE AND SEALING WITH ORACLEASM INIT
 
 ACTIVATE KERNEL ON NODE1 AND NODE2
