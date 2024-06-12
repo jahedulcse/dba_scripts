@@ -339,6 +339,11 @@ Final checks complete. About to write GPT data. THIS WILL OVERWRITE EXISTING
 PARTITIONS!!
 
 Do you want to proceed? (Y/N): Y
+
+Number  Start (sector)    End (sector)  Size       Code  Name
+   1            2048      1677721599   800.0 GiB   8300  Linux filesystem
+   2      1677721600      2147483614   224.0 GiB   8300  Linux filesystem
+
 ------------
 gdisk /dev/mapper/3600a098038314841515d555846446141
 gdisk /dev/mapper/3600a098038314841515d555846446143
