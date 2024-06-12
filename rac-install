@@ -29,7 +29,7 @@ more /etc/selinux/config
 [root@node2 ~]# systemctl disable firewalld
 [root@node2 ~]# systemctl stop NetworkManager
 [root@node2 ~]#
-[root@node2 ~]# systemctl disable NetworkManage
+[root@node2 ~]# systemctl disable NetworkManager
 
 #### Repository Create 
 ----------------------------
