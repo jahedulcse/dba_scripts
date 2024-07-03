@@ -487,7 +487,12 @@ Launching Oracle Grid Infrastructure Setup Wizard…
 **********
 cluster name: dgfdcrac-cluster
 
-/dev/oracleasm/listdisks*
+/dev/oracleasm/disks/*
+
+--- If not shown disks then again this execute
+oracleasm scandisks
+
+/dev/oracleasm/disks/*
 
 sys: DgfDr$24#321
 
