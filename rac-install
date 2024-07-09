@@ -178,7 +178,10 @@ export PATH=/usr/sbin:/usr/local/bin:$PATH
 export PATH=$ORACLE_HOME/bin:$PATH
 export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib
 export CLASSPATH=$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib
-
+-----
+. .bash_profile
+env |grep ORA
+-----
 [root@node1 ~]# vi /home/grid/.bash_profile
 export TMP=/tmp
 export TMPDIR=$TMP
