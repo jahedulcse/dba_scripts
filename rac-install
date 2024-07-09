@@ -11,7 +11,7 @@ https://www.youtube.com/watch?v=3Zwfb12Eku4&t=2s
 =======================
 Server: Cisco RAC Server
 Storage Device: NetApp
-Storage Type: SAN (It is connected with cable)
+Storage Type: SAN (It is connected with direct cable not network)
 
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
