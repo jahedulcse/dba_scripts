@@ -699,6 +699,9 @@ step2: login as root user
 step3 :
 #oracleasm deletedisk -v DISK1
 
+oracleasm scandisks
+oracleasm listdiks
+
 -----Find the device name
 
 [root@r2n1 ~]# blkid |grep oracleasm
