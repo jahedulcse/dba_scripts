@@ -706,3 +706,61 @@ oracleasm listdiks
 
 [root@r2n1 ~]# blkid |grep oracleasm
 
+======= Remove ASM diskgroup in sqlplus mode ============
+
+Follow the below steps to remove a disk from ASM diskgroup in Oracle 19c.
+
+1. Check the ASM disks in ASM DiskGroup.
+2. Remove disk from ASM diskgroup.
+3. Check the rebalance status.
+4. Check the dropped disk from ASM Diskgroup
+5. Delete the ASM Disk
+
+1. Check the ASM disk in ASM Diskgroup
+
+$sqlplus / as sysasm
+
+set lines 999;
+col diskgroup for a15
+col diskname for a15
+col path for a35
+select a.name DiskGroup,b.name DiskName, b.total_mb, (b.total_mb-b.free_mb) Used_MB, b.free_mb,b.path,b.header_status
+from v$asm_disk b, v$asm_diskgroup a
+where a.group_number (+) =b.group_number
+order by b.group_number,b.name;
+
+2. Remove disk from ASM diskgroup.
+
+$sqlplus / as sysasm
+
+SQL> alter diskgroup ORA_DATA drop disk ORA_DATA_0010 rebalance power 100;
+
+3. Check the rebalance status.
+
+$sqlplus / as sysasm
+
+SQL> select * from v$asm_operation.
+
+If no rows returned, then the rebalance is compeleted.
+
+4. Check the dropped disk from ASM Diskgroup
+
+set lines 999;
+col diskgroup for a15
+col diskname for a15
+col path for a35
+select a.name DiskGroup,b.name DiskName, b.total_mb, (b.total_mb-b.free_mb) Used_MB, b.free_mb,b.path,b.header_status
+from v$asm_disk b, v$asm_diskgroup a
+where a.group_number (+) =b.group_number
+order by b.group_number,b.name;
+
+5. Delete the ASM Disk
+
+List the ASM Disks,
+
+$oracleasm listdisks
+
+Delete the new ASM Disk,
+
+sudo oracleasm deletedisk ORA_DATA_01
+
