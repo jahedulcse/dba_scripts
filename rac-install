@@ -676,3 +676,10 @@ Instance CDBTEST2 is running on node node2
 [oracle@node1 ~]$
 
 Test your toad connection again.
+
+===================
+
+-----Find the device name
+
+[root@r2n1 ~]# blkid |grep oracleasm
+
