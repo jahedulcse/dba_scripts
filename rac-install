@@ -677,7 +677,27 @@ Instance CDBTEST2 is running on node node2
 
 Test your toad connection again.
 
-===================
+=================== oracleasm delete disk ERROR ====================
+
+#oracleasm deletedisk -v DISK1
+Clearing disk header: oracleasm-write-label: Unable to open device "/dev/oracleasm/disks/DISK1": Device or resource busy
+failed
+Unable to clear disk "DISK1"
+
+Cause:  This disk header already in use.
+Solution: we have to clear header forcely
+step1: find the device name
+root@rac1 ~]# blkid |grep oracleasm
+/dev/sdd1: LABEL="DISK1" TYPE="oracleasm"
+dd if=/dev/zero of=/dev/sdd1 bs=1024 count=100
+or
+dd if=/dev/zero of=/dev/mapper/multipathbp1 bs=1024 count=100
+
+step2: login as root user
+#partprobe /dev/mapper/multipathbp1
+
+step3 :
+#oracleasm deletedisk -v DISK1
 
 -----Find the device name
 
