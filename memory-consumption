@@ -1,0 +1,61 @@
+-------------Step 1: Query for PGA Memory Usage by Machine
+
+SELECT 
+    s.machine,
+    ROUND(SUM(p.pga_used_mem)/1024/1024, 2) AS total_pga_used_mem_MB,
+    ROUND(SUM(p.pga_alloc_mem)/1024/1024, 2) AS total_pga_alloc_mem_MB,
+    ROUND(SUM(p.pga_freeable_mem)/1024/1024, 2) AS total_pga_freeable_mem_MB,
+    ROUND(SUM(p.pga_max_mem)/1024/1024, 2) AS total_pga_max_mem_MB
+FROM 
+    v$process p,
+    v$session s
+WHERE 
+    p.addr = s.paddr
+    AND s.username IS NOT NULL
+GROUP BY 
+    s.machine
+ORDER BY 
+    total_pga_used_mem_MB DESC;
+
+--------------- Step 2: Query for SGA Memory Usage
+
+SELECT 
+    ROUND(SUM(value)/1024/1024, 2) AS total_sga_size_MB
+FROM 
+    v$sga;
+---------------
+SELECT 
+    i.HOST_NAME,
+    s.INST_ID, 
+    ROUND(SUM(s.value)/1024/1024, 2) AS total_sga_size_MB
+FROM 
+    gv$sga s
+JOIN 
+    gv$instance i
+    ON s.INST_ID = i.INSTANCE_NUMBER
+GROUP BY 
+    i.HOST_NAME, s.INST_ID
+ORDER BY 
+    total_sga_size_MB DESC;
+
+
+--------------------------
+
+------------Step 3: Combine the Results
+Since SGA is constant for each instance, you can manually add it to the PGA results per machine. There isn't a built-in query that directly adds these up by machine across all instances. However, 
+you can do this calculation manually by summing up the results from the above two queries.
+
+Example Calculation:
+Run the PGA query to get the PGA memory per machine.
+Run the SGA query on each instance to get the SGA size.
+Sum the PGA and SGA values for each machine.
+Notes:
+SGA Memory: SGA is shared for the entire instance, so it needs to be added once per instance.
+PGA Memory: PGA is specific to each process and session, so it varies by machine.
+By combining these two, you can get an approximate total memory usage per machine in your Oracle database environment.
+
+
+---------
+
+Oracle does not inherently provide a machine-wise breakdown of SGA memory usage because the SGA (System Global Area) is a shared memory structure that is specific to each database instance rather than to individual machines or processes. However, 
+you can find out the total SGA size for each instance, and if your environment has multiple instances running on different machines, you can correlate the instance with its machine.
