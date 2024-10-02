@@ -35,7 +35,7 @@ SQL> ALTER SESSION SET CONTAINER=cdb$root;
 **********
 SQL> alter session set "_ORACLE_SCRIPT"=true;
 ************
-SQL> CREATE USER your_user_name IDENTIFIED BY your_password
+SQL> CREATE USER test IDENTIFIED BY test
 
 
 ---------------
