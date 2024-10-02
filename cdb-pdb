@@ -30,6 +30,14 @@ SQL> ALTER SESSION SET CONTAINER=cdb$root;
 SQL> SHOW CON_NAME
 SQL> ALTER SESSION SET CONTAINER=pdb1 SERVICE=my_new_service;
 
+------ In cdb$root to avoid C## prefix in create a user:
+SQL> ALTER SESSION SET CONTAINER=cdb$root;
+**********
+SQL> alter session set "_ORACLE_SCRIPT"=true;
+************
+SQL> CREATE USER your_user_name IDENTIFIED BY your_password
+
+
 ---------------
 sqlplus '/ as sysdba'
 SQL> CREATE OR REPLACE TRIGGER pdb_startup AFTER STARTUP ON DATABASE
