@@ -174,7 +174,7 @@ UPDATE ORACLE & GRID USERS PROFILE ON NODE1 AND NODE2
 [root@node1 ~]# vi /home/oracle/.bash_profile
 export TMP=/tmp
 export TMPDIR=$TMP
-export ORACLE_HOSTNAME=node1.serhatcelik.local
+export ORACLE_HOSTNAME=dgfpdbdc01.dgf.gov.bd
 export ORACLE_UNQNAME=portaldb
 export ORACLE_BASE=/u01/app/oracle/database/19.3.0
 export DB_HOME=$ORACLE_BASE/dbhome_1
@@ -192,7 +192,7 @@ env |grep ORA
 [root@node1 ~]# vi /home/grid/.bash_profile
 export TMP=/tmp
 export TMPDIR=$TMP
-export ORACLE_HOSTNAME=node1.serhatcelik.local
+export ORACLE_HOSTNAME=dgfpdbdc01.dgf.gov.bd
 export ORACLE_BASE=/u01/app/grid/gridbase/
 export ORACLE_HOME=/u01/app/grid/19.3.0/gridhome_1
 export GRID_BASE=/u01/app/grid/gridbase/
@@ -207,7 +207,7 @@ export CLASSPATH=$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib
 [root@node2 ~]# vi /home/oracle/.bash_profile
 export TMP=/tmp
 export TMPDIR=$TMP
-export ORACLE_HOSTNAME=node2.serhatcelik.local
+export ORACLE_HOSTNAME=dgfpdbdc02.dgf.gov.bd
 export ORACLE_UNQNAME=portaldb
 export ORACLE_BASE=/u01/app/oracle/database/19.3.0
 export DB_HOME=$ORACLE_BASE/dbhome_1
@@ -222,7 +222,7 @@ export CLASSPATH=$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib
 [root@node2 ~]# vi /home/grid/.bash_profile
 export TMP=/tmp
 export TMPDIR=$TMP
-export ORACLE_HOSTNAME=node2.serhatcelik.local
+export ORACLE_HOSTNAME=dgfpdbdc02.dgf.gov.bd
 export ORACLE_BASE=/u01/app/grid/gridbase/
 export ORACLE_HOME=/u01/app/grid/19.3.0/gridhome_1
 export GRID_BASE=/u01/app/grid/gridbase/
