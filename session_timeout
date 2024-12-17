@@ -58,5 +58,18 @@ select * from user_resource_limits;
 ---------------- for monitoring session idle time or waiting time
 SELECT username, status, seconds_in_wait FROM v$session WHERE username = 'JAHED';
 
+===============================================================
+
+select * from user_resource_limits;
+
+SELECT * FROM V$OSSTAT;
+
+SELECT EVENT, TOTAL_WAITS, TIME_WAITED
+FROM V$SYSTEM_EVENT
+WHERE EVENT NOT LIKE 'SQL*Net%';
+
+-------------
+
+select * from apex_workspaces;
 
 
