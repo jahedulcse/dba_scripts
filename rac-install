@@ -778,3 +778,15 @@ sudo oracleasm deletedisk ORA_DATA_01
 
 --- solution
 https://www.hhutzler.de/blog/re-executing-grid-setup-fails-fatal-ins-30024/
+
+-------------
+------- ERROR
+[root@dgfpdbdr01 oracleasm]# oracleasm createdisk data1 /dev/mapper/3600a0980383148495024563533357769d1
+Device "/dev/mapper/3600a0980383148495024563533357769d1" is already labeled for ASM disk "DATA1"
+
+---- Solution
+rm -rf /dev/oracleasm/disks/DATA1
+oracleasm deletedisk DATA1
+dd if=/dev/zero of=/dev/mapper/3600a0980383148495024563533357769 bs=1M count=10
+wipefs -a /dev/mapper/3600a0980383148495024563533357769d1
+wipefs -a /dev/mapper/3600a0980383148495024563533357769d2
