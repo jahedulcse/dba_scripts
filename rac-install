@@ -771,3 +771,10 @@ Delete the new ASM Disk,
 
 sudo oracleasm deletedisk ORA_DATA_01
 
+
+*********************** ERROR during installastion
+--- error
+[INS-30024] Installer has detected that the location determined as Oracle Grid Infrastructure home (/u01/app/grid/19.3.0/gridhome_1), is not a valid Oracle home.
+
+--- solution
+https://www.hhutzler.de/blog/re-executing-grid-setup-fails-fatal-ins-30024/
