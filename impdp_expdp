@@ -34,6 +34,9 @@ create or replace directory ORACLE_PUMP as '/u02/clidata';
 
 impdp \"sys/password@clidb as sysdba\" full=Y directory=oracle_pump DUMPFILE=clidata-full.DMP logfile=clidata-full.log
 
+impdp system/"DgfDC$$24$4142" directory=backup dumpfile=230125DR_full_export_new.dmp logfile=280125DR_full_import_new.log
+SCHEMAS=FOODPROD,FSMMSPROD,OMSPROD,FOODPRODT,FSMMSPRODT,OMSPRODT transform=disable_archive_logging:y exclude=statistics parallel=4
+
 ============== foodprod gtl -------------
 *****************************************************************
 
