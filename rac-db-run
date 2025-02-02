@@ -41,6 +41,8 @@ crsctl check crs
 crsctl stop crs
 crsctl start crs
 
+srvctl config database -d portaldb
+
 -------------------------------
 
 ping dgfood.gov.bd
