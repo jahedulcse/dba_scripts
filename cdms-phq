@@ -23,10 +23,12 @@ dumpfile=cdms_fullexp_%U.dmp
 logfile=cdms_fullexp.log
 EXCLUDE=STATISTICS
 
------------
+----------- photo table import
 Starting "SYS"."SYS_IMPORT_TABLE_01": "/******** AS SYSDBA" directory=cdms_photo dumpfile=photo.dmp tables=CDMS_BASE.PHOTO logfile=imp_cdmsdb_CDMS_photo_table_date_16012025.log table_exists_action=replace transform=lob_storage:securefile parallel=12
-
+---- all audit log import
 Starting "SYS"."SYS_IMPORT_TABLE_01":  "/******** AS SYSDBA" directory=cdms_photo dumpfile=all_audit_logtab_%U.dmp tables=cdms_base.all_audit_log logfile=imp_cdmsdb_CDMS_AUDIT_17012025.log table_exists_action=append
+
+Starting "SYS"."SYS_IMPORT_TABLE_01":  "/******** AS SYSDBA" directory=cdms_photo dumpfile=all_audit_logtab_%U.dmp tables=cdms_base.all_audit_log logfile=imp_cdmsdb_CDMS_AUDIT_17012025.log table_exists_action=append 
 
 
 
