@@ -1,1 +1,32 @@
+------- Documents table export
+expdp system/system parfile=exp_cdms_table_info_document.par
+
+------- exp_cdms_table_info_document.par file
+userid=" / as sysdba"
+directory=pump_dir_cdms
+parallel=20
+tables=CDMS_BASE.INFO_DOCUMENTS
+dumpfile=Expdp_info_documents_%U.dmp
+logfile=Expdp_info_documents_vm_server_19012025.log
+EXCLUDE=STATISTICS
+cluster=n
+
+------- Full export
+/******** AS SYSDBA parfile=exp_db_cdms.par
+
+----- parfile=exp_db_cdms.par file
+userid="/ as sysdba"
+directory=exp_db_cdms
+full=y
+parallel=20 
+dumpfile=cdms_fullexp_%U.dmp
+logfile=cdms_fullexp.log
+EXCLUDE=STATISTICS
+
+-----------
+Starting "SYS"."SYS_IMPORT_TABLE_01": "/******** AS SYSDBA" directory=cdms_photo dumpfile=photo.dmp tables=CDMS_BASE.PHOTO logfile=imp_cdmsdb_CDMS_photo_table_date_16012025.log table_exists_action=replace transform=lob_storage:securefile parallel=12
+
+Starting "SYS"."SYS_IMPORT_TABLE_01":  "/******** AS SYSDBA" directory=cdms_photo dumpfile=all_audit_logtab_%U.dmp tables=cdms_base.all_audit_log logfile=imp_cdmsdb_CDMS_AUDIT_17012025.log table_exists_action=append
+
+
 
