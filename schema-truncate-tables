@@ -1,3 +1,4 @@
+--- Disable reference constaints
 BEGIN
    -- Disable all foreign key constraints
    FOR c IN (SELECT table_name, constraint_name FROM all_constraints 
@@ -5,10 +6,19 @@ BEGIN
       EXECUTE IMMEDIATE 'ALTER TABLE FOODPROD.' || c.table_name || ' DISABLE CONSTRAINT ' || c.constraint_name;
    END LOOP;
 END;
-
+--- Truncate a schema tables
 BEGIN
    FOR t IN (SELECT table_name FROM ALL_TABLES WHERE OWNER = 'FOODPROD') LOOP
       EXECUTE IMMEDIATE 'TRUNCATE TABLE FOODPROD.' || t.table_name || ' CASCADE';
    END LOOP;
 END;
 /
+
+--- Enable reference constaints
+BEGIN
+   -- Disable all foreign key constraints
+   FOR c IN (SELECT table_name, constraint_name FROM all_constraints 
+             WHERE owner = 'FOODPROD' AND constraint_type = 'R') LOOP
+      EXECUTE IMMEDIATE 'ALTER TABLE FOODPROD.' || c.table_name || ' ENABLE CONSTRAINT ' || c.constraint_name;
+   END LOOP;
+END;
