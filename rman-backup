@@ -1,0 +1,40 @@
+nohup ./rman_level_0_backup_db_cdms_uncomp.sh &
+------------------
+
+#!/bin/bash
+ORACLE_BASE=/u01/app/oracle
+ORACLE_HOME=/u01/app/oracle/product/19.0.0.0/dbhome_1
+BACKUP_LOG_PATH=/home/oracle/rman_scripts/cdms
+export ORACLE_BASE
+export ORACLE_HOME
+export ORACLE_SID=cdmscdb
+export BACKUP_LOG_PATH
+LOG_FILE=${BACKUP_LOG_PATH}/rman_level_0_backup_db_cdms_uncomp_$(date +%Y%m%d-%H%M%S).log
+$ORACLE_HOME/bin/rman msglog=${LOG_FILE} <<EOF
+connect target /
+run {
+allocate channel t1 type disk;
+allocate channel t2 type disk;
+allocate channel t3 type disk;
+allocate channel t4 type disk;
+allocate channel t5 type disk;
+allocate channel t6 type disk;
+allocate channel t7 type disk;
+allocate channel t8 type disk;
+BACKUP AS BACKUPSET INCREMENTAL LEVEL 0 DATABASE FORMAT '/backup/cdms_rman_lv0/level_0/database_%d_%u_%s' PLUS ARCHIVELOG FORMAT  '/backup/cdms_rman_lv0/level_0/arch_%d_%u_%s';
+release channel t1;
+release channel t2;
+release channel t3;
+release channel t4;
+release channel t5;
+release channel t6;
+release channel t7;
+release channel t8;
+}
+run {
+allocate channel c1 type disk;
+backup current controlfile format '/backup/cdms_rman_lv0/level_0/Control_%d_%u_%s';
+release channel c1;
+}
+exit;
+EOF
