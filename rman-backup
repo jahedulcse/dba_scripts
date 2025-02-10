@@ -1,4 +1,14 @@
 nohup ./rman_level_0_backup_db_cdms_uncomp.sh &
+
+tail -200f rman_level_0_backup_db_cdms_uncomp_20250209-014847.log
+
+cd rman_scripts/cdms/
+
+tail -200f rman_level_0_backup_db_cdms_uncomp_20250209-014847.log
+
+nohup ./rman_level_0_backup_db_cdms_uncomp.sh &
+
+cat rman_level_0_backup_db_cdms_uncomp.sh
 ------------------
 
 #!/bin/bash
