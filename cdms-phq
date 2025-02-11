@@ -30,5 +30,17 @@ Starting "SYS"."SYS_IMPORT_TABLE_01":  "/******** AS SYSDBA" directory=cdms_phot
 
 Starting "SYS"."SYS_IMPORT_TABLE_01":  "/******** AS SYSDBA" directory=cdms_photo dumpfile=all_audit_logtab_%U.dmp tables=cdms_base.all_audit_log logfile=imp_cdmsdb_CDMS_AUDIT_17012025.log table_exists_action=append 
 
+========== File and folder transfer ===========
+--- execute in database server and copy the file from database to ftp server
+scp -P 8739 /backup/cdms_rman_lv0/level_0/database_CDMSCDB_1m3haqgu_54 ftpuser@10.201.19.85:/cdms_backup/rman_backup/level_0
+
+--- execute in ftp server and copy the file from database to ftp server
+scp -P 1769 root@10.201.19.69:/backup/cdms_rman_lv0/level_0/database_CDMSCDB_1l3haqgu_53 /cdms_backup/rman_backup/level_0/
+
+---- execute in database server to transfer folder to ftp server
+scp -r -P 8739 /backup/cdms_rman_lv1/level_1 ftpuser@10.201.19.85:/cdms_backup/rman_backup/
+scp -r -P 8739 /backup/cdms_rman_lv1/level_1/12022025 ftpuser@10.201.19.85:/cdms_backup/rman_backup/level_1/
+
+
 
 
