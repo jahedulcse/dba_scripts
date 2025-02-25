@@ -1,0 +1,72 @@
+
+========== Drop a database
+------------
+
+1. Set Environment Variables
+----
+export ORACLE_SID=your_db_name1
+export ORACLE_HOME=/u01/app/oracle/product/19c/dbhome_1
+export PATH=$ORACLE_HOME/bin:$PATH
+
+2. Shut Down the Database
+Ensure the database is in MOUNT state before proceeding:
+----------
+sqlplus / as sysdba
+SHUTDOWN IMMEDIATE;
+
+Start the database in MOUNT mode if it’s not already:
+---
+STARTUP MOUNT;
+
+3. Remove Database Using DBCA
+To safely remove the database, use Database Configuration Assistant (DBCA):
+--------
+dbca -silent -deleteDatabase -sourceDB your_db_name -sysDBAUserName sys -sysDBAPassword your_password
+
+4. Manually Drop the Database
+If DBCA is not an option, manually drop the database:
+-----
+sqlplus / as sysdba
+STARTUP MOUNT;
+ALTER SYSTEM ENABLE RESTRICTED SESSION;
+ALTER SYSTEM SET CLUSTER_DATABASE=FALSE SCOPE=SPFILE;
+SHUTDOWN IMMEDIATE;
+STARTUP NOMOUNT;
+DROP DATABASE;
+
+This removes the control files, datafiles, and redo logs.
+
+Remove Database from oratab (if needed)
+Edit the /etc/oratab or /var/opt/oracle/oratab file and remove the entry for your database.
+
+5. Remove Entries from OCR (Oracle Cluster Registry)
+Check the database resources in CRS:
+---------
+crsctl stat res -t
+
+Disable and remove the database resource:
+-----
+srvctl stop database -d your_db_name
+srvctl remove database -d your_db_name
+
+6. Clean Up Leftover Files (Optional)
+If you want to clean up Oracle-managed files:
+-----
+rm -rf /u01/app/oracle/oradata/your_db_name
+rm -rf /u01/app/oracle/fast_recovery_area/your_db_name
+rm -rf /u01/app/oracle/admin/your_db_name
+
+Verification
+Check if the database is completely removed:
+----------
+srvctl config database -d your_db_name
+
+It should return "Database does not exist."
+
+Check if the database is completely removed:
+----
+lsnrctl status
+
+If the service name is still present, restart the listener:
+--------
+lsnrctl reload
