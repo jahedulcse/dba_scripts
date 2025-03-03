@@ -72,3 +72,6 @@ su - oracle
 sqlplus / as sysdba
 startup;
 
+=============== size of Disk groups
+
+SELECT NAME, TOTAL_MB, FREE_MB FROM V$ASM_DISKGROUP;
