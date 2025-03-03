@@ -790,3 +790,8 @@ oracleasm deletedisk DATA1
 dd if=/dev/zero of=/dev/mapper/3600a0980383148495024563533357769 bs=1M count=10
 wipefs -a /dev/mapper/3600a0980383148495024563533357769d1
 wipefs -a /dev/mapper/3600a0980383148495024563533357769d2
+
+
+============= size of Disk groups
+
+SELECT NAME, TOTAL_MB, FREE_MB FROM V$ASM_DISKGROUP;
