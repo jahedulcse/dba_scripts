@@ -40,6 +40,26 @@ select
 from dual
 );
 
+========== Schema wise exact DB size
+
+SELECT OWNER, 
+       ROUND(SUM(BYTES) / 1024 / 1024 /1024, 2) AS SIZE_GB
+FROM DBA_SEGMENTS 
+GROUP BY OWNER 
+ORDER BY SIZE_GB DESC;
+
+========== Schema wise exact TABLE size
+
+SELECT OWNER, 
+       SEGMENT_NAME, 
+       SEGMENT_TYPE, 
+       ROUND(SUM(BYTES) / 1024 / 1024, 2) AS SIZE_MB 
+FROM DBA_SEGMENTS 
+WHERE OWNER = 'FOODPROD' AND SEGMENT_TYPE='TABLE'
+GROUP BY OWNER, SEGMENT_NAME, SEGMENT_TYPE 
+ORDER BY SIZE_MB DESC;
+
+
 
 Analyzing query output
 
