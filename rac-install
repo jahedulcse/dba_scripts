@@ -795,3 +795,7 @@ wipefs -a /dev/mapper/3600a0980383148495024563533357769d2
 ============= size of Disk groups
 
 SELECT NAME, TOTAL_MB, FREE_MB FROM V$ASM_DISKGROUP;
+
+********************** Masteing RAC with srvctl commands
+
+https://dbanavigator.blogspot.com/2025/03/mastering-oracle-rac-with-srvctl.html
