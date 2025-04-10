@@ -1,3 +1,27 @@
 https://www.youtube.com/watch?v=-gxcQLTrZGU
 
 https://ocptechnology.com/patching-in-19c/
+
+---------------
+
+cd $ORACLE_HOME/OPatch
+
+./opatch version
+
+In my case the OPATCH version is 12.2.o.1.17 and we need the minimum OPATCH version to be 12.2.0.1.30.
+
+$ cd $ORACLE_HOME/
+$mv OPatch OPatch_bkp
+
+Upgrade OPATCH
+Upgrade the OPATCH utility, just unzip the newly downloaded opatch utility version in ORACLE_HOME directly.
+
+
+$unzip /u02/p6880880_190000_Linux-x86-64 -d $ORACLE_HOME/
+Once the above command is completed then check the OPATCH version again.
+
+$ ./opatch version
+OPatch Version: 12.2.0.1.35
+OPatch succeeded.
+
+
