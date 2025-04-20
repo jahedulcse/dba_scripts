@@ -80,3 +80,13 @@ SELECT NAME, TOTAL_MB, FREE_MB FROM V$ASM_DISKGROUP;
 
 https://dbanavigator.blogspot.com/2025/03/mastering-oracle-rac-with-srvctl.html
 
+*********** Error recover ************
+
+sqlplus / as sysasm
+startup;
+
+crsctl start crs
+crsctl start cluster -all
+
+srvctl status database -d portaldb
+
