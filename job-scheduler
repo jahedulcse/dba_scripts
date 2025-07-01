@@ -28,6 +28,20 @@ BEGIN
 END;
 /
 
+---==== Hourly every day
+
+BEGIN
+  DBMS_SCHEDULER.create_job (
+    job_name        => 'interface_logs_update_job',
+    job_type        => 'PLSQL_BLOCK',
+    job_action      => 'BEGIN pr_job_FFP_INTERFACE_LOGS_SCHED; END;',
+    start_date      => SYSTIMESTAMP,
+    repeat_interval => 'FREQ=HOURLY; INTERVAL=1',
+    enabled         => TRUE,
+    comments        => 'Runs every hour every day');
+END;
+/
+
 ===================
 
 SELECT job_name, start_date, repeat_interval, state FROM dba_scheduler_jobs WHERE job_name = 'JOB_UPDATE_T_OMS_DISTRIBUTION_SCHEDULES';
