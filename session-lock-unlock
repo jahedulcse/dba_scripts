@@ -1,0 +1,11 @@
+Identify Blocking DDL Locks:
+
+SELECT s.sid, s.serial#, s.username, s.status, s.program, o.object_name, o.object_type
+FROM v$session s
+JOIN v$locked_object l ON s.sid = l.session_id
+JOIN dba_objects o ON l.object_id = o.object_id
+WHERE o.object_name = 'T_IBAS_SINGLE_ENTRY';
+------
+Kill the Blocking Session (If Safe):
+
+ALTER SYSTEM KILL SESSION 'sid,serial#' IMMEDIATE;
