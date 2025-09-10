@@ -3,3 +3,83 @@ https://www.youtube.com/watch?v=B1vaecsOW78
 https://www.youtube.com/watch?v=fmsrEzDtD2Q&list=PLUyvpMtrnS-AEESEyZzsaDo5DxxHPQwiM&index=3
 
 https://www.br8dba.com/tag/step-by-step-configuring-a-oracle-13c-enterprise-manager-cloud-control/
+
+=====
+sysman password: Oracle321
+
+**************************************************
+********************
+====== start_OEM.sh
+
+export ORACLE_SID=emdb
+export ORACLE_UNQNAME=emdb
+export ORACLE_GLOBAL_NAME=emdb
+export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=/u01/app/oracle/product/19.3.0/dbhome_1
+export ORACLE_HOSTNAME=oracleem.localdomain
+
+/u01/app/oracle/product/19.3.0/dbhome_1/bin/lsnrctl start
+
+sleep 2;
+
+echo $ORACLE_SID
+sqlplus '/as sysdba'<<!
+startup
+show parameter db_name
+select open_mode from v\$database ;
+exit
+!
+
+sleep 2; /u01/app/oracle/oemmw/bin/emctl start oms
+sleep 2; /u01/app/oracle/oemagent/agent_inst/bin/emctl start agent
+
+echo '------------------------------------------------------------'
+/u01/app/oracle/product/19.3.0/dbhome_1/bin/lsnrctl status
+echo '------------------------------------------------------------'
+/u01/app/oracle/oemmw/bin/emctl status oms
+echo '------------------------------------------------------------'
+ /u01/app/oracle/oemagent/agent_inst/bin/emctl status agent
+echo '------------------------------------------------------------'
+
+## /u01/app/oracle/oemmw/bin/emctl status oms -details
+
+*******************************************************************
+******************************************
+======= Stop_OEM.sh
+
+export ORACLE_SID=emdb
+export ORACLE_UNQNAME=emdb
+export ORACLE_GLOBAL_NAME=emdb
+export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=/u01/app/oracle/product/19.3.0/dbhome_1
+export ORACLE_HOSTNAME=oracleem.localdomain
+
+sleep 2; /u01/app/oracle/oemmw/bin/emctl stop oms
+sleep 2; /u01/app/oracle/oemagent/agent_inst/bin/emctl stop agent
+sleep 2; /u01/app/oracle/product/19.3.0/dbhome_1/bin/lsnrctl stop
+
+sleep 2;
+
+echo $ORACLE_SID
+sqlplus '/as sysdba'<<!
+show parameter db_name
+select open_mode from v\$database ;
+shut immediate
+exit
+!
+
+echo '------------------------------------------------------------'
+/u01/app/oracle/product/19.3.0/dbhome_1/bin/lsnrctl status
+echo '------------------------------------------------------------'
+/u01/app/oracle/oemmw/bin/emctl status oms
+echo '------------------------------------------------------------'
+/u01/app/oracle/oemagent/agent_inst/bin/emctl status agent
+echo '------------------------------------------------------------'
+
+
+************************************************************
+*********************
+
+[oracle@oracleem ~]$ /u01/app/oracle/oemmw/bin/emctltatus oms -details
+
+
