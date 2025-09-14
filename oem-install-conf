@@ -84,4 +84,8 @@ echo '------------------------------------------------------------'
 
 [oracle@oracleem ~]$ /u01/app/oracle/oemmw/bin/emctltatus oms -details
 
+**** test agent is working
+https://10.243.67.12:3872/emd/main
+
+
 
