@@ -9,6 +9,13 @@ https://www.br8dba.com/tag/step-by-step-configuring-a-oracle-13c-enterprise-mana
 https://10.243.67.12:7804/em
 sysman password: Oracle321
 
+==== By OEM database instance monitor user name: dbsnmp
+==== By OEM asm instance monitor user name: asmsnmp
+---
+CREATE USER asmsnmp IDENTIFIED BY Oracle321;
+grant sysdba to asmsnmp;
+GRANT SYSASM TO asmsnmp;
+
 **************************************************
 ********************
 ====== start_OEM.sh
