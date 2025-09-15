@@ -88,8 +88,15 @@ echo '------------------------------------------------------------'
 
 ************************************************************
 *********************
-
+===== On the OMS servrer
 [oracle@oracleem ~]$ /u01/app/oracle/oemmw/bin/emctltatus oms -details
+--- List the host target
+[oracle@oracleem ~]$ /u01/app/oracle/oemmw/bin/emcli get_targets -targets="host"
+--- Remove the Agent Target
+[oracle@oracleem ~]$ /u01/app/oracle/oemmw/bin/emcli delete_target -name="dgfpdbdc01.dgf.gov.bd:3872" -type="oracle_emd" -delete_monitored_targets
+----delete the duplicate host target if needed:
+[oracle@oracleem ~]$ /u01/app/oracle/oemmw/bin/emcli delete_target -name="dgfpdbdc01.dgf.gov.bd" -type="host" -force
+
 
 **** test agent is working
 https://10.243.67.12:3872/emd/main
