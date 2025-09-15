@@ -97,9 +97,14 @@ echo '------------------------------------------------------------'
 ----delete the duplicate host target if needed:
 [oracle@oracleem ~]$ /u01/app/oracle/oemmw/bin/emcli delete_target -name="dgfpdbdc01.dgf.gov.bd" -type="host" -force
 
+*** test EM is login
+[oracle@oracleem ~]$ /u01/app/oracle/oemmw/bin/emcli login -username=sysman
 
 **** test agent is working
 https://10.243.67.12:3872/emd/main
+
+*** Database Express Link
+https://10.243.67.12:7803/em
 
 
 
